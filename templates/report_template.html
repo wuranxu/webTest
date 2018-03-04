@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{conf.report_title}}</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+    <script src="http://code.jquery.com/jquery-latest.js"></script>
+    <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <style>
+        p {
+            padding: 5px;
+        }
+        #main {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-6">
+                <h2 class="text-capitalize">{{title}}</h2>
+                <p class='attribute'><strong>测试结果: </strong>{{rv}}</p>
+                <p class='attribute'><strong>系统信息: </strong>{{conf.system}}</p>
+                <p class='attribute'><strong>浏览器版本: </strong>{{ conf.browser_type }}{{conf.browser_ver}}</p>
+                <p class='attribute'><strong>软件名称: </strong>{{conf.soft_name}}</p>
+                <p class='attribute'><strong>开始时间: </strong>{{headers.start_time}}</p>
+                <p class='attribute'><strong>耗费时间: </strong>{{headers.duration}}</p>
+                <p class='attribute'><strong>用例总数: </strong>{{total_test}}</p>
+                <p class='attribute'><strong>详细信息: </strong>{{headers.status}}</p>
+                <p id="success" style="display: none">{{success}}</p>
+                <p id="failed" style="display: none">{{failed}}</p>
+                <p id="error" style="display: none">{{error}}</p>
+                <p id="skip" style="display: none">{{skip}}</p>
+
+            </div>
+            <div class="col-xs-6">
+                <div id="main" style="width: 600px;height:400px;"></div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-sm-10 col-md-10">
+                <table class='table table-hover table-responsive'>
+                    <thead>
+                        <tr>
+                            <th>用例名称</th>
+                            <th>测试套件</th>
+                            <th>用例描述</th>
+                            <th>状态</th>
+                            <th>截图</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for case in test_cases_list %}
+                            <tr class='{{case[2]}}'>
+                                <td class="col-xs-2">{{ case[0] }}</td>
+                                <td class="col-xs-3">{{ case[1] }}</td>
+                                <td class="col-xs-4">{{ case[4] }}</td>
+                                <td class="col-xs-3">
+                                    <span class="label label-{{case[2]}}">
+                                        {% if "success" == case[2] %}
+                                            Pass
+                                        {% elif "info" == case[2] %}
+                                            Skip
+                                        {% elif "danger" == case[2] %}
+                                            Fail
+                                        {% else %}
+                                            Error
+                                        {% endif %}
+                                    </span>
+                                    {% if "success" not in case[2] %}
+                                        &nbsp<button class="btn btn-default btn-xs view">View</button>
+                                    {% endif %}
+                                </td>
+                                {% if case[2] != 'success' and case[2] != 'info'%}
+                                    {% if conf.screenshot %}
+                                        <td><button class="btn btn-default btn-xs screenshot" title="data:image/png;base64,{{conf.screenshot.get(case[0])}}" type="button">screenshot</button></td>
+                                    {% else %}
+                                        <td><button class="btn btn-default btn-xs">no pic</button></td>
+                                    {% endif %}
+                                {% else %}
+                                    <td><button class="btn btn-default btn-xs">no pic</button></td>
+                                {% endif %}
+                            </tr>
+                            {% if "success" != case[1] %}
+                                <tr style="display:none;">
+                                    <td class="col-xs-2">详情: </td>
+                                    <td class="col-xs-5">
+                                        <p>{{case[3]}}</p>
+                                    </td>
+                                    <td class="col-xs-2"></td>
+                                </tr>
+                            {% endif %}
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdn.bootcss.com/echarts/3.5.2/echarts.common.js"></script>
+    <script type="text/javascript">
+
+        $(document).ready(function(){
+            $(".screenshot").on('click', function () {
+                var title = this.title;
+                var dw = window.open();
+                dw.document.open();
+                dw.document.write("<image width='100%' src=" + "'" + title + "'" + ">");
+                dw.document.close();
+            });
+
+
+
+            $('td').on('click', '.btn.btn-default.btn-xs.view', function(e){
+                e.preventDefault();
+                var $this = $(this);
+                var $nextRow = $this.closest('tr').next('tr');
+                $nextRow.slideToggle("fast");
+                $this.text(function(i, text){
+                    if (text === 'View') {
+                        return 'Hide';
+                    } else {
+                        return 'View';
+                    }
+                });
+            });
+            // 基于准备好的dom，初始化echarts实例
+            var myChart = echarts.init(document.getElementById('main'));
+            var success = parseInt($("#success").html());
+            var failed = parseInt($("#failed").html());
+            var error = parseInt($("#error").html());
+            var skip = parseInt($("#skip").html());
+            // 指定图表的配置项和数据
+            var option = {
+                    title : {
+                        text: '自动化测试',
+                        subtext: '通过率',
+                        x:'center'
+                    },
+                    tooltip : {
+                        trigger: 'item',
+                        formatter: "{a} <br/>{b} : {c} ({d}%)"
+                    },
+                    legend: {
+                        orient: 'vertical',
+                        left: 'right',
+                        data: ['成功','失败','出错','跳过']
+                    },
+                    series : [
+                        {
+                            name: '数量',
+                            type: 'pie',
+                            radius : '55%',
+                            center: ['50%', '60%'],
+                            data:[
+                                {value:success, name:'成功'},
+                                {value:failed, name:'失败'},
+                                {value:error, name:'出错'},
+                                {value:skip, name:'跳过'}
+                            ],
+                            color: ['#5cb85c', '#d9534f','#f0ad4e','#5bc0de'],
+                            itemStyle: {
+                                emphasis: {
+                                    shadowBlur: 10,
+                                    shadowOffsetX: 0,
+                                    shadowColor: 'rgba(0, 0, 0, 0.5)'
+                                }
+                            }
+                        }
+                    ]
+                };
+
+            // 使用刚指定的配置项和数据显示图表。
+            myChart.setOption(option);
+
+
+        });
+
+
+
+    </script>
+</body>
+</html>
