@@ -59,6 +59,7 @@ class Install(object):
             with open(self.zip_path, 'wb') as f:
                 f.write(r.content)
         except Exception as e:
+            print("下载xmind.zip失败, 请重新运行install.py!")
             raise Exception(e.__str__())
 
     def un_zip(self):

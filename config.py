@@ -23,7 +23,7 @@ class BaseConf(object):
     chrome_reg = r"SOFTWARE\Google\Chrome\BLBeacon"                     # win chrome注册表地址
 
     # 用例配置
-    soft_name = "百度网站"
+    soft_name = "必应首页"
 
     BROWSER = "Chrome"    # 启动浏览器
 
@@ -37,7 +37,7 @@ class BaseConf(object):
 
     exists = 10    # 元素存在等待时间
 
-    report_title = "baidu首页自动化测试报告"     # 报告名字
+    report_title = "必应首页自动化测试报告"     # 报告名字
 
     # 不执行的测试集
     skip_suite = []
