@@ -3,6 +3,7 @@ import os
 import sys
 
 from config import Config
+from Tools.utils import Utils
 
 
 class Logger(object):
@@ -16,6 +17,7 @@ class Logger(object):
         formatter = logging.Formatter('%(asctime)s %(levelname)-8s: %(message)s')
 
         # 文件日志
+        Utils.make_dir(Config.LOG_DIR)
         file_handler = logging.FileHandler("{}.log".format(
             os.path.join(Config.LOG_DIR, filename)), encoding="utf-8")
         file_handler.setFormatter(formatter)  # 可以通过setFormatter指定输出格式
@@ -32,5 +34,4 @@ class Logger(object):
 
         # 指定日志的最低输出级别，默认为WARN级别
         self.logger.setLevel(logging.INFO)
-
 

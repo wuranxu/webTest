@@ -7,7 +7,8 @@ from datetime import datetime
 from TestResult.GenerateReport import generate
 from TestResult.Result import result
 from TestResult.Suite import Suite
-from Tools.chrome import Utils
+from Tools.chrome import Browser
+from Tools.utils import Utils
 from Tools.web_tool import Tools
 from Tools.xmind_reader import Xmind
 from config import Config
@@ -42,6 +43,7 @@ def get_xmind_case():
 
 def write_report(html):
     file = "report{}.html".format(datetime.strftime(datetime.now(), "%Y-%m-%d %H-%M-%S"))
+    Utils.make_dir(Config.report_path)
     filename = os.path.join(Config.report_path, file)
     with open(filename, "w", encoding="utf-8") as f:
         f.write(html)
@@ -50,7 +52,7 @@ def write_report(html):
 
 
 def run():
-    Utils.set_browser()
+    Browser.set_browser()
     start = datetime.now()
     suite = create_suite()
     Config.CASE_NUM = len(getattr(suite, "_tests"))

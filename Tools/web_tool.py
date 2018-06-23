@@ -5,11 +5,11 @@ import os
 # from aip.ocr import AipOcr
 from datetime import datetime
 
+from Tools.utils import Utils
 from config import Config
 
 
 class Tools(object):
-
     # conf = Config()
     # APP_ID = '10126357'
     # API_KEY = '8Kfi2hoCKe4ZqWtD70HDY2uB'
@@ -30,10 +30,11 @@ class Tools(object):
         :return:
         """
         pic_dir = Config.pic_dir
+        Utils.make_dir(pic_dir)
         pic = os.path.join(pic_dir, case_id) if case_id else pic_dir
-        if not os.path.exists(pic):
-            os.mkdir(pic)
-        filename = os.path.join(pic, "{} {}.png".format(func_name, datetime.strftime(datetime.now(), "%Y-%m-%d %H-%M-%S")))
+        Utils.make_dir(pic)
+        filename = os.path.join(pic,
+                                "{} {}.png".format(func_name, datetime.strftime(datetime.now(), "%Y-%m-%d %H-%M-%S")))
         self.driver.get_screenshot_as_file(filename)
         return filename
 
@@ -71,10 +72,10 @@ class Tools(object):
         for root, dirs, files in os.walk(suite):
             if root not in [os.path.join(suite, x) for x in Config.skip_suite]:
                 for file in sorted(files):
-                    if not file.endswith(".pyc") and not file.startswith("base_case")\
+                    if not file.endswith(".pyc") and not file.startswith("base_case") \
                             and file.endswith(".py"):
                         file = file.split(".")[0]
-                        suite_name = root.replace("\\", "/").split("/")[-1]    # 兼容/和\
+                        suite_name = root.replace("\\", "/").split("/")[-1]  # 兼容/和\
                         case_dict.update({file: suite_name})
         return case_dict
 
@@ -82,8 +83,6 @@ class Tools(object):
     def trans_menu(cls, menu):
         """转换层级菜单"""
         return menu.split("->")
-
-
 
     '''OCR删除
     def get_pic_text(self, element):

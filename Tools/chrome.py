@@ -6,10 +6,11 @@ import zipfile
 import requests
 from bs4 import BeautifulSoup
 
+from Tools.utils import Utils
 from config import Config
 
 
-class Utils(object):
+class Browser(object):
 
     @classmethod
     def set_browser(cls):
@@ -45,6 +46,7 @@ class Utils(object):
     @classmethod
     def check_driver(cls, version):
         status, filename = False, None
+        Utils.make_dir(Config.driver_dir)    # check driver_dir
         for root, dirs, files in os.walk(Config.driver_dir):
             for file in files:
                 if version not in file:

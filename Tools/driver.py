@@ -6,7 +6,8 @@ from selenium.webdriver.firefox.webdriver import WebDriver as FF
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
-from Tools.chrome import Utils
+from Tools.chrome import Browser
+from Tools.utils import Utils
 from Tools.decorator import wait
 from config import Config
 
@@ -22,7 +23,7 @@ class ChromeDriver(base()):
     def __init__(self):
 
         if Config.SYS == "linux":
-            Utils.set_browser()
+            Browser.set_browser()
             # 创建虚拟桌面
             display = Display(visible=0, size=(1920, 1080))
             display.start()
@@ -32,7 +33,7 @@ class ChromeDriver(base()):
             # op = chrome_op()
             # op.add_argument("--headless")
             if getattr(Config, "DRIVER_PATH", None) is None:
-                Utils.set_browser()
+                Browser.set_browser()
             super(ChromeDriver, self).__init__(executable_path=getattr(Config, "DRIVER_PATH", None))
 
     def get_element(self, ele):

@@ -14,7 +14,7 @@ class BingSearch(BaseCase):
         main = Index(self.driver)
         main.search_dragonball_super()
         # 断言
-        self.assertEqual("龙珠超 - 国内版 Bing", self.driver.title,
+        self.assertEqual("龙珠 - 国内版 Bing", self.driver.title,
                          "bing搜索'龙珠超'后页面标题与预期不符")
 
 
