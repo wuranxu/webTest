@@ -9,6 +9,9 @@ cache__/
 # IDEA
 .idea
 
+# HTML report
+.html
+
 # Distribution / packaging
 .Python
 env/
