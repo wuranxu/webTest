@@ -4,6 +4,7 @@ from config import Config
 import os
 from collections import defaultdict
 
+
 class Xmind(object):
 
     def __init__(self, filename):
@@ -149,17 +150,17 @@ class Xmind(object):
                 expected = s.get("expected")
                 msg = "\"{}\"".format(s.get("msg"))
                 actually = s.get("actually")
-                if expected:        # equal等断言
+                if expected:  # equal等断言
                     arg = re.findall(r"\{(.+)\}", expected)
                     if arg:
                         arg = ["{}={}".format(x, x) for x in arg]
                         expected = "\"{}\".format({})".format(expected, *arg)
                 sens = "{}self.{}({}, {}, {})".format(sens, action, expected, actually, msg)
-                f.write(sens+"\n")
+                f.write(sens + "\n")
             else:
                 # 判断操作有无返回值
                 for m in method:
-                    if s.get("action") == m.get('method'):     # 找到该操作
+                    if s.get("action") == m.get('method'):  # 找到该操作
                         returns = m.get('val')
                         if returns is not None:
                             if ";" in returns:
@@ -171,5 +172,5 @@ class Xmind(object):
                             sens = "{}{}(self.driver).{}({})".format(sens, m.get('page'), s.get("action"), params)
                         else:
                             sens = "{}{}(self.driver).{}()".format(sens, m.get('page'), s.get("action"))
-                        f.write(sens+"\n")
+                        f.write(sens + "\n")
                         break

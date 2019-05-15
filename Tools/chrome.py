@@ -17,13 +17,14 @@ class Browser(object):
         # 自动检查Chrome版本号
         if Config.SYS == "mac":
             # OS X
-            result = subprocess.Popen([r'{}/Google\ Chrome --version'.format(Config.chrome_app)], stdout=subprocess.PIPE, shell=True)
+            result = subprocess.Popen([r'{}/Google\ Chrome --version'.format(Config.chrome_app)],
+                                      stdout=subprocess.PIPE, shell=True)
             version = [x.decode("utf-8") for x in result.stdout][0].strip().split(" ")[-1]
         elif Config.SYS == "win":
             import winreg
             try:
                 key = winreg.OpenKey(winreg.HKEY_CURRENT_USER, Config.chrome_reg)
-                version = winreg.QueryValueEx(key, "version")[0]    # 查询注册表chrome版本号
+                version = winreg.QueryValueEx(key, "version")[0]  # 查询注册表chrome版本号
             except Exception:
                 raise Exception("查询注册表chrome版本失败!")
         else:
@@ -46,7 +47,7 @@ class Browser(object):
     @classmethod
     def check_driver(cls, version):
         status, filename = False, None
-        Utils.make_dir(Config.driver_dir)    # check driver_dir
+        Utils.make_dir(Config.driver_dir)  # check driver_dir
         for root, dirs, files in os.walk(Config.driver_dir):
             for file in files:
                 if version not in file:
@@ -57,6 +58,20 @@ class Browser(object):
                 else:
                     status, filename = True, file
         return status, filename
+
+    @classmethod
+    def search_ver_v2(cls, version):
+        ver = ".".join(version.split(".")[:2])
+        r = requests.get(Config.driver_url)
+        bs = BeautifulSoup(r.text, features='html.parser')
+        rt = [x for x in bs.select("pre a")]
+        if not rt:
+            raise Exception("可能淘宝镜像挂了，请重试")
+        for x in rt:
+            if x.text.startswith(ver):
+                return x.text.rstrip("/")
+        else:
+            raise Exception("没有找到当前版本的合适驱动: {}".format(version))
 
     @classmethod
     def search_ver(cls, version):
@@ -72,6 +87,8 @@ class Browser(object):
             text = info.text
             vr = re.findall(r"-+ChromeDriver\s+v(\d+\.+\d+)[\s|.|-|]+", text)
             br = re.findall(r"Supports\s+Chrome\s+v(\d+-\d+)", text)
+            if not br:
+                return cls.search_ver_v2(version)
             for v, b in zip(vr, br):
                 small, bigger = b.split("-")
                 if int(small) <= int(number) <= int(bigger):
@@ -118,7 +135,7 @@ class Browser(object):
             L = filename.split(".")
             new_file = "{}_{}.{}".format("".join(L[:-1]), version, L[-1])
         else:
-            new_file = ""           #TODO
+            new_file = ""  # TODO
         os.rename(os.path.join(Config.driver_dir, filename),
                   os.path.join(Config.driver_dir, new_file))
         Config.DRIVER_PATH = os.path.join(Config.driver_dir, new_file)
