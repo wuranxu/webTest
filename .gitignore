@@ -41,6 +41,9 @@ wheels/
 pip-log.txt
 pip-delete-this-directory.txt
 
+# mac file
+.DS_Store
+
 # Unit test / coverage reports
 htmlcov/
 .tox/
