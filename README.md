@@ -250,7 +250,7 @@ project
 
   ![image.png](http://upload-images.jianshu.io/upload_images/6053915-e4ad74e6fc94703b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
-  - 第二步: 配置run_case.py
+  - 第二步: 配置start_test.py
 
   点击Edit Configurations
 
@@ -266,7 +266,7 @@ project
 
  - 第三步: 运行用例
 
- 右击run_case.py, 选择Run则为运行模式, Debug则为调试模式
+ 右击start_test.py, 选择Run则为运行模式, Debug则为调试模式
  ![image.png](http://upload-images.jianshu.io/upload_images/6053915-9eae73a79ef61182.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
 
