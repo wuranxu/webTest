@@ -2,286 +2,314 @@
 <html>
 
 <head>
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"
-		integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
-	<script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
-	<script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/antd/4.7.0/antd.min.js"></script>
-	<script src="https://cdn.bootcss.com/echarts/3.5.2/echarts.common.js"></script>
-	<!-- <link rel="stylesheet" type="text/css" href="dist/antd.min.css" /> -->
-	<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/antd/4.7.0/antd.min.css" />
+    <meta charset="utf-8"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"
+          integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+    <script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/antd/4.7.0/antd.min.js"></script>
+    <script src="https://cdn.bootcss.com/echarts/3.5.2/echarts.common.js"></script>
+    <!-- <link rel="stylesheet" type="text/css" href="dist/antd.min.css" /> -->
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/antd/4.7.0/antd.min.css"/>
 
-	<title>{{conf.report_title}}</title>
-	<style>
-		* {
-			margin: 0;
-			padding: 0
-		}
+    <title>{{ conf.report_title }}</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0
+        }
 
-		.info {
-			margin: 24px;
-			background-color: #fff;
-			padding: 24px;
-		}
+        .info {
+            margin: 24px;
+            background-color: #fff;
+            padding: 24px;
+        }
 
-		body {
-			background-color: #ECECEC;
-		}
+        body {
+            background-color: #ECECEC;
+        }
 
 
+        .testresult {
+            margin-left: 16px;
+        }
 
-		.testresult {
-			margin-left: 16px;
-		}
+        .mytable {
+            margin-top: 16px;
+            background-color: #fff;
+            padding: 12px;
+        }
 
-		.mytable {
-			margin-top: 16px;
-			background-color: #fff;
-			padding: 12px;
-		}
+        .errormsg {
+            font-weight: 700;
+            font-size: 14px;
+        }
 
-		.errormsg {
-			font-weight: 700;
-			font-size: 14px;
-		}
+        .result_text {
+            margin-left: 4px;
+        }
 
-		.result_text {
-			margin-left: 4px;
-		}
+        .ant-table-thead > tr > th {
+            background: #daeaff;
+        }
+    </style>
 
-		.ant-table-thead>tr>th {
-			background: #daeaff;
-		}
-	</style>
-
-	<!-- <link rel="stylesheet" type="text/css" href="dist/antd.compact.min.css" /> -->
+    <!-- <link rel="stylesheet" type="text/css" href="dist/antd.compact.min.css" /> -->
 </head>
 
 <body>
-	<div class="ant-row">
-		<!-- <div class="ant-col ant-col-2"></div> -->
-		<div class="container">
-			<div>
-				<div class="info">
-					<div class="ant-row">
-						<div class="ant-col ant-col-10">
-							<h2 class="text-capitalize">{{title}}</h2>
-							<p class="attribute"><strong>测试结果:　</strong>
-								<span class="testresult">
+<div class="ant-row">
+    <!-- <div class="ant-col ant-col-2"></div> -->
+    <div class="container">
+        <div>
+            <div class="info">
+                <div class="ant-row">
+                    <div class="ant-col ant-col-10">
+                        <h2 class="text-capitalize">{{ title }}</h2>
+                        <p class="attribute"><strong>测试结果:　</strong>
+                            <span class="testresult">
 									{% if rv == "未通过" %}
-									<span class="ant-badge ant-badge-status ant-badge-not-a-wrapper"><span
-											class="ant-badge-status-dot ant-badge-status-error"></span><span
-											class="ant-badge-status-text result_text">
-										</span>{{rv}}</span>
-									{% else %}
-									<span class="ant-badge ant-badge-status ant-badge-not-a-wrapper"><span
-											class="ant-badge-status-dot ant-badge-status-success"></span><span
-											class="ant-badge-status-text result_text">
-										</span>{{rv}}</span>
-									{% endif %}
+                                        <span class="ant-badge ant-badge-status ant-badge-not-a-wrapper"><span
+                                                class="ant-badge-status-dot ant-badge-status-error"></span><span
+                                                class="ant-badge-status-text result_text">
+										</span>{{ rv }}</span>
+                                    {% else %}
+                                        <span class="ant-badge ant-badge-status ant-badge-not-a-wrapper"><span
+                                                class="ant-badge-status-dot ant-badge-status-success"></span><span
+                                                class="ant-badge-status-text result_text">
+										</span>{{ rv }}</span>
+                                    {% endif %}
 								</span>
-							</p>
-							<p class='attribute'><strong>业务名称:　</strong>
-								<span class="testresult">{{conf.soft_name}}</span>
-							</p>
-							<p class='attribute'><strong>用例总数:　</strong><span class="testresult"> {{total_test}}</span>
-							</p>
-							<p class='attribute'><strong>开始时间:　</strong><span
-									class="testresult"> {{headers.start_time}}</span></p>
-							<p class='attribute'><strong>耗费时间:　</strong><span
-									class="testresult"> {{headers.duration}}</span></p>
-							<p class='attribute'><strong>系统信息:　</strong><span class="testresult"> {{conf.system}}</span>
-							</p>
-							<p class='attribute'><strong>浏览器类型:</strong>
-								<span class="ant-tag testresult">{{ conf.browser_type }}</span>
-							</p>
-							<p class='attribute'><strong>浏览器版本:</strong>
-								<span class="ant-tag ant-tag-blue testresult">{{conf.browser_ver}}</span>
-							</p>
-							<p class='attribute'><strong>用例统计:　</strong><span
-									class="testresult">{{headers.status}}</span></p>
-							<p id="success" style="display: none">{{success}}</p>
-							<p id="failed" style="display: none">{{failed}}</p>
-							<p id="error" style="display: none">{{error}}</p>
-							<p id="skip" style="display: none">{{skip}}</p>
+                        </p>
+                        <p class='attribute'><strong>业务名称:　</strong>
+                            <span class="testresult">{{ conf.soft_name }}</span>
+                        </p>
+                        <p class='attribute'><strong>用例总数:　</strong><span class="testresult"> {{ total_test }}</span>
+                        </p>
+                        <p class='attribute'><strong>开始时间:　</strong><span
+                                class="testresult"> {{ headers.start_time }}</span></p>
+                        <p class='attribute'><strong>耗费时间:　</strong><span
+                                class="testresult"> {{ headers.duration }}</span></p>
+                        <p class='attribute'><strong>系统信息:　</strong><span class="testresult"> {{ conf.system }}</span>
+                        </p>
+                        <p class='attribute'><strong>浏览器类型:</strong>
+                            <span class="ant-tag testresult">{{ conf.browser_type }}</span>
+                        </p>
+                        <p class='attribute'><strong>浏览器版本:</strong>
+                            <span class="ant-tag ant-tag-blue testresult">{{ conf.browser_ver }}</span>
+                        </p>
+                        <p class='attribute'><strong>用例统计:　</strong><span
+                                class="testresult">{{ headers.status }}</span></p>
+                        <p id="success" style="display: none">{{ success }}</p>
+                        <p id="failed" style="display: none">{{ failed }}</p>
+                        <p id="error" style="display: none">{{ error }}</p>
+                        <p id="skip" style="display: none">{{ skip }}</p>
 
-						</div>
-						<div class="ant-col ant-col-14">
-							<div id="main" style="width: 400px;height:400px;"></div>
-						</div>
-					</div>
-					<div class="mytable">
+                    </div>
+                    <div class="ant-col ant-col-4"></div>
+                    <div class="ant-col ant-col-10">
+                        <div id="main" style="width: 380px;height:380px;"></div>
+                    </div>
+                </div>
+                <div class="mytable">
 
-						<div class="ant-card-body">
-							<table style="table-layout: auto; width: 100%">
-								<colgroup></colgroup>
-								<thead class="ant-table-thead">
-									<tr>
-										<th class="ant-table-cell">用例名称</th>
-										<th class="ant-table-cell">测试套件</th>
-										<th class="ant-table-cell">用例描述</th>
-										<th class="ant-table-cell">执行状态</th>
-										<th class="ant-table-cell">详情</th>
-									</tr>
-								</thead>
-								<tbody class="ant-table-tbody">
-									{% for case in test_cases_list %}
-									<tr data-row-key='' {{ loop.index }}'' class="ant-table-row ant-table-row-level-0">
-										<td class="ant-table-cell">{{ case[0] }}</td>
-										<td class="ant-table-cell">{{ case[1] }}</td>
-										<td class="ant-table-cell">{{ case[4] }}</td>
-										<td class="ant-table-cell">
-											{% if "success" == case[2] %}
-											<span class="ant-badge ant-badge-status ant-badge-not-a-wrapper"><span
-													class="ant-badge-status-dot ant-badge-status-success"></span><span
-													class="ant-badge-status-text">
+                    <div class="ant-card-body">
+                        <table style="table-layout: auto; width: 100%">
+                            <colgroup></colgroup>
+                            <thead class="ant-table-thead">
+                            <tr>
+                                <th class="ant-table-cell">用例名称</th>
+                                <th class="ant-table-cell">测试套件</th>
+                                <th class="ant-table-cell">用例描述</th>
+                                <th class="ant-table-cell">执行状态</th>
+                                <th class="ant-table-cell">详情</th>
+                            </tr>
+                            </thead>
+                            <tbody class="ant-table-tbody">
+                            {% for case in test_cases_list %}
+                                <tr data-row-key='' {{ loop.index }}'' class="ant-table-row ant-table-row-level-0">
+                                <td class="ant-table-cell">{{ case[0] }}</td>
+                                <td class="ant-table-cell">{{ case[1] }}</td>
+                                <td class="ant-table-cell">{{ case[4] }}</td>
+                                <td class="ant-table-cell">
+                                    {% if "success" == case[2] %}
+                                        <span class="ant-badge ant-badge-status ant-badge-not-a-wrapper"><span
+                                                class="ant-badge-status-dot ant-badge-status-success"></span><span
+                                                class="ant-badge-status-text">
 												</span>通过</span>
-											{% elif "info" == case[2] %}
-											<span class="ant-badge ant-badge-status ant-badge-not-a-wrapper"><span
-													class="ant-badge-status-dot ant-badge-status-default"></span><span
-													class="ant-badge-status-text">
+                                    {% elif "info" == case[2] %}
+                                        <span class="ant-badge ant-badge-status ant-badge-not-a-wrapper"><span
+                                                class="ant-badge-status-dot ant-badge-status-default"></span><span
+                                                class="ant-badge-status-text">
 												</span>跳过</span>
-											{% elif "danger" == case[2] %}
-											<span class="ant-badge ant-badge-status ant-badge-not-a-wrapper"><span
-													class="ant-badge-status-dot ant-badge-status-error"></span><span
-													class="ant-badge-status-text">
+                                    {% elif "danger" == case[2] %}
+                                        <span class="ant-badge ant-badge-status ant-badge-not-a-wrapper"><span
+                                                class="ant-badge-status-dot ant-badge-status-error"></span><span
+                                                class="ant-badge-status-text">
 												</span>失败</span>
-											{% else %}
-											<span class="ant-badge ant-badge-status ant-badge-not-a-wrapper"><span
-													class="ant-badge-status-dot ant-badge-status-warning"></span><span
-													class="ant-badge-status-text">
+                                    {% else %}
+                                        <span class="ant-badge ant-badge-status ant-badge-not-a-wrapper"><span
+                                                class="ant-badge-status-dot ant-badge-status-warning"></span><span
+                                                class="ant-badge-status-text">
 												</span>故障</span>
-											{% endif %}
+                                    {% endif %}
 
-										</td>
-										{% if case[2] != 'success' and case[2] != 'info'%}
-										{% if conf.screenshot %}
-										<td><a class="ant-btn ant-btn-sm screenshot"
-												title="data:image/png;base64,{{conf.screenshot.get(case[0])}}"
-												type="button">screenshot</a>
-											{% if "success" not in case[2] %}
-											&nbsp<button class="ant-btn ant-btn-primary ant-btn-sm view">详细</button>
-											{% endif %}
-										</td>
-										{% else %}
-										<td>
-											<span>无截图</span>
-											{% if "success" not in case[2] %}
-											&nbsp<button class="ant-btn ant-btn-primary ant-btn-sm view">详细</button>
-											{% endif %}
-										</td>
-										{% endif %}
-										{% else %}
-										<td>
-											<span>无截图</span>
-											{% if "success" not in case[2] %}
-											&nbsp<button class="ant-btn ant-btn-primary ant-btn-sm view">详细</button>
-											{% endif %}
-										</td>
-										{% endif %}
-										{% if "success" != case[1] %}
-									<tr style="display:none;" class="ant-table-row ant-table-row-level-0">
-										<td class="ant-table-cell">详情: </td>
-										<td class="ant-table-cell" colspan="4">
-											<p class="errormsg">{{case[3]}}</p>
-										</td>
-									</tr>
-									{% endif %}
-									{% endfor %}
-								</tbody>
-							</table>
+                                </td>
+                                {% if case[2] != 'success' and case[2] != 'info' %}
+                                    {% if conf.screenshot %}
+                                        <td><a class="ant-btn ant-btn-sm screenshot"
+                                               title="data:image/png;base64,{{ conf.screenshot.get(case[0]) }}"
+                                               type="button">screenshot</a>
+                                            {% if "success" not in case[2] %}
+                                                &nbsp
+                                                <button class="ant-btn ant-btn-primary ant-btn-sm view">详细</button>
+                                            {% endif %}
+                                        </td>
+                                    {% else %}
+                                        <td>
+                                            <span>无截图</span>
+                                            {% if "success" not in case[2] %}
+                                                &nbsp
+                                                <button class="ant-btn ant-btn-primary ant-btn-sm view">详细</button>
+                                            {% endif %}
+                                        </td>
+                                    {% endif %}
+                                {% else %}
+                                    <td>
+                                        <span>无截图</span>
+                                        {% if "success" not in case[2] %}
+                                            &nbsp
+                                            <button class="ant-btn ant-btn-primary ant-btn-sm view">详细</button>
+                                        {% endif %}
+                                    </td>
+                                {% endif %}
+                                {% if "success" != case[1] %}
+                                    <tr style="display:none;" class="ant-table-row ant-table-row-level-0">
+                                        <td class="ant-table-cell">详情:</td>
+                                        <td class="ant-table-cell" colspan="4">
+                                            <p class="errormsg">{{ case[3] }}</p>
+                                        </td>
+                                    </tr>
+                                {% endif %}
+                            {% endfor %}
+                            </tbody>
+                        </table>
 
-						</div>
-					</div>
-				</div>
+                    </div>
+                </div>
+            </div>
 
-			</div>
-		</div>
-	</div>
+        </div>
+    </div>
+</div>
 
 
 </body>
-<script src="https://cdn.bootcss.com/echarts/3.5.2/echarts.common.js"></script>
+<script src="https://gw.alipayobjects.com/os/lib/antv/g2/4.1.0-beta.11/dist/g2.min.js"></script>
+<script src="https://gw.alipayobjects.com/os/antv/pkg/_antv.data-set-0.11.1/dist/data-set.js"></script>
+<script>
+    const success = parseInt($("#success").html());
+    const failed = parseInt($("#failed").html());
+    const error = parseInt($("#error").html());
+    const skip = parseInt($("#skip").html());
+    const total = success + failed + error + skip;
+    const data = [
+        {type: '成功', value: success},
+        {type: '失败', value: failed},
+        {type: '出错', value: error},
+        {type: '跳过', value: skip},
+    ];
+    const chart = new G2.Chart({
+        container: 'main',
+        autoFit: true,
+        height: 500,
+    });
+    const col = (tp) => {
+        if (tp === '成功') {
+            return '#13CE66'
+        }
+        if (tp === '失败') {
+            return '#FF4949'
+        }
+        if (tp === '出错') {
+            return '#F7BA2A'
+        }
+        return '#20A0FF'
+    }
+    chart.data(data);
+
+    chart.coordinate('theta', {
+        radius: 0.75
+    });
+    chart.tooltip({
+        showMarkers: false
+    });
+    const calcPercent = (count, total) => {
+        if (count === 0 || total === 0) {
+            return 0;
+        }
+        return Math.round(count / total * 1000) / 10;
+    }
+
+    const interval = chart
+        .interval()
+        .adjust('stack')
+        .position('value')
+        .color('type', ['#13CE66', '#FF4949', '#F7BA2A', '#20A0FF'])
+        .style({opacity: 0.4})
+        .state({
+            active: {
+                style: (element) => {
+                    const shape = element.shape;
+                    return {
+                        matrix: Util.zoom(shape, 1.1),
+                    }
+                }
+            }
+        })
+        .label('type', (val) => {
+            return {
+                style: {
+                    lineWidth: 1,
+                    fill: col(val),
+                    opacity: 0.8
+                },
+                offset: 20,
+                content: (obj) => {
+                    return obj.type + '\n' + calcPercent(obj.value, total) + '%';
+                },
+            };
+        });
+
+    chart.interaction('element-single-selected');
+
+    chart.render();
+</script>
 <script type="text/javascript">
 
-	$(document).ready(function () {
-		$(".screenshot").on('click', function () {
-			var title = this.title;
-			var dw = window.open();
-			dw.document.open();
-			dw.document.write("<image width='100%' src=" + "'" + title + "'" + ">");
-			dw.document.close();
-		});
+    $(document).ready(function () {
+        $(".screenshot").on('click', function () {
+            var title = this.title;
+            var dw = window.open();
+            dw.document.open();
+            dw.document.write("<img width='100%' src=" + "'" + title + "'" + ">");
+            dw.document.close();
+        });
 
 
-
-		$('td').on('click', '.ant-btn.ant-btn-primary.ant-btn-sm.view', function (e) {
-			e.preventDefault();
-			var $this = $(this);
-			var $nextRow = $this.closest('tr').next('tr');
-			$nextRow.slideToggle("fast");
-			$this.text(function (i, text) {
-				if (text === '详细') {
-					return '收起';
-				} else {
-					return '详细';
-				}
-			});
-		});
-		// 基于准备好的dom，初始化echarts实例
-		var myChart = echarts.init(document.getElementById('main'));
-		var success = parseInt($("#success").html());
-		var failed = parseInt($("#failed").html());
-		var error = parseInt($("#error").html());
-		var skip = parseInt($("#skip").html());
-		// 指定图表的配置项和数据
-		var option = {
-			title: {
-				text: '自动化测试',
-				subtext: '通过率',
-				x: 'center'
-			},
-			tooltip: {
-				trigger: 'item',
-				formatter: "{a} <br/>{b} : {c} ({d}%)"
-			},
-			legend: {
-				orient: 'vertical',
-				left: 'right',
-				data: ['成功', '失败', '出错', '跳过']
-			},
-			series: [
-				{
-					name: '数量',
-					type: 'pie',
-					radius: '55%',
-					center: ['50%', '60%'],
-					data: [
-						{ value: success, name: '成功' },
-						{ value: failed, name: '失败' },
-						{ value: error, name: '出错' },
-						{ value: skip, name: '跳过' }
-					],
-					color: ['#5cb85c', '#d9534f', '#f0ad4e', '#5bc0de'],
-					itemStyle: {
-						emphasis: {
-							shadowBlur: 10,
-							shadowOffsetX: 0,
-							shadowColor: 'rgba(0, 0, 0, 0.5)'
-						}
-					}
-				}
-			]
-		};
-
-		// 使用刚指定的配置项和数据显示图表。
-		myChart.setOption(option);
-
-
-	});
-
-
-
+        $('td').on('click', '.ant-btn.ant-btn-primary.ant-btn-sm.view', function (e) {
+            e.preventDefault();
+            var $this = $(this);
+            var $nextRow = $this.closest('tr').next('tr');
+            $nextRow.slideToggle("fast");
+            $this.text(function (i, text) {
+                if (text === '详细') {
+                    return '收起';
+                } else {
+                    return '详细';
+                }
+            });
+        });
+    });
 </script>
-
 </html>

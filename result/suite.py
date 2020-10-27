@@ -49,7 +49,8 @@ class Suite(unittest.TestSuite):
                         fail = fail_id.index(test.case_id)
                     if test.case_id in error_id:
                         error = error_id.index(test.case_id)
-                    if error is not None and fail is not None:
+                    if error is None and fail is None:
+                        # 说明没有失败or错误, 停止重试
                         break
                     elif error is not None:
                         self.logger.warning("用例: {} 第{}次失败 原因: {}".format(test.__class__.__name__,
