@@ -15,7 +15,6 @@
 ![image.png](http://upload-images.jianshu.io/upload_images/6053915-2f1cb468358719c9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
 
-
 ### 效果展示
 
 ![image.png](http://upload-images.jianshu.io/upload_images/6053915-fa525599b8c29947.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
@@ -30,11 +29,9 @@
 
 - 安装依赖包
 
-进入下载好的webTest目录，并在此目录运行install.py
-mac/Linux: ```python3 install.py```
-windows: ```python install.py```
+进入下载好的webTest目录，并在此目录运行install.py, 需要安装好pip(默认自带的就行)
 
-![image.png](http://upload-images.jianshu.io/upload_images/6053915-7d9a5b3777cc6297.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+mac/Linux/windows: ```pip3 install -r requirements.py -i https://pypi.douban.com/simple```
 
 - 运行demo
 
@@ -44,7 +41,10 @@ windows: ```python install.py```
 
 ![image.png](http://upload-images.jianshu.io/upload_images/6053915-3698662b1b177b18.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
+#### 配置说明
 
+    见config.py，大部分说明都有对应的描述，RETRY是全局重试次数。可以参考XmindTest.py文件里面的retry字段，设置单个用例的重试次数。
+   
 
 ### 环境配置
 ##### 注: 无桌面版Linux目前只做到支持firefox
@@ -59,37 +59,36 @@ windows: ```python install.py```
 ```
 project
 
-└───ErrorPic
+└───error
 |
-└───DataBase
+└───database
 |
-└───Log
+└───logs
 |
-└───Xmind
+└───xmind
 |
-└───Page
+└───page
 |
-└───Report
+└───report
 |
-└───Page
-|
-└───TestSuite
+└───tests
 |   |    base_case.py
 |
 └───templates
 |   |   report_templates.html
-└───TestResult
+└───result
 |   |   report_templates.html
-|   |   GenerateReport.py
-|   |   Result.py
+|   |   generator.py
+|   |   text_test_result.py
 |
 └───chromedriver
 │   │   chromedriver.exe
 |
-└───Tools
+└───util
 |   |   chrome.py
 |   |   decorator.py
 |   |   driver.py
+|   |   utils.py
 |   |   logger.py
 |   |   web_tool.py
 |
@@ -108,19 +107,23 @@ project
 
   存放chromedriver驱动, 若本机未安装chromedriver则自动匹配本机chrome版本下载对应驱动。
 
-- DataBase
+- database
 
   存放Mysql和Mongodb的连接类
+  
+- error
 
-- ErrorPic
+  异常分类
+
+- screenshot
 
   存放出错截图, 目前根据用例名称创建文件夹并存放。
 
-- Log
+- logs
 
   存放所有日志文件, 目前只有webdriver_test.log, 主要目的是将日志区分开来。
 
-- Page
+- page
 
   页面目录, 可扩展, 针对不同模块的页面可设计不同目录结构。一般存放该页面的操作(Action)以及元素(Location), 用例具体断言不建议写于此处(因人而异)。
 
@@ -132,17 +135,17 @@ project
 
   存放html模板，传入测试结果以生成测试报告。
 
-- TestResult
+- result
 
-  - GenerateReport.py
+  - generator.py
 
     是组织测试结果, 生成测试报告, 填入数据至html报告模板的方法。
 
-  - Result.py
+  - text_test_result.py
 
     继承自unittest.TextTestResult类, 存放测试结果。
 
-- TestSuite
+- tests
 
   测试套件目录, 可扩展, 子目录为某个测试集。测试集中存放测试用例。
 
@@ -151,7 +154,7 @@ project
     存放基础测试用例。
 
 
-- Tools
+- util
 
   - chrome.py
 
@@ -178,7 +181,7 @@ project
     用于解析xmind文件，暂时不支持过于复杂的xmind。用例的大概编写方式如下图。
     ![image](http://upload-images.jianshu.io/upload_images/6053915-4f08935ff9ddff18.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
-- Xmind
+- xmind
 
   存放Xmind文件, xmind文件用于编写测试用例。
 
@@ -191,7 +194,7 @@ project
 
   用于存放本框架所需库。
 
-- run_case.py
+- start_test.py
 
   存放组织用例, 生成测试套件, 运行测试用例等函数。
 
@@ -395,9 +398,5 @@ project
 
 - 执行效率
 
-  目前是单线程, 还没做多线程, 时间紧迫。所以在jenkins那台老爷机比较慢, 如果用例多起来了肯定是不行的。
-
-- 代码规范/质量
-
-  写得一塌糊涂, 大家看不过去就帮忙改了吧, 跪谢orz
+  目前是单线程, 后续可能会支持异步。
   

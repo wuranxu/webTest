@@ -4,7 +4,6 @@ import sys
 
 
 class BaseConf(object):
-
     # 测试环境
     ENV = "dev"
 
@@ -17,15 +16,15 @@ class BaseConf(object):
         SYS = "linux"
 
     # MAC os
-    chrome_app = "/Applications/Google\ Chrome.app/Contents/MacOS/"     # mac os chrome安装地址
+    chrome_app = r"/Applications/Google\ Chrome.app/Contents/MacOS/"  # mac os chrome安装地址
 
     # Win
-    chrome_reg = r"SOFTWARE\Google\Chrome\BLBeacon"                     # win chrome注册表地址
+    chrome_reg = r"SOFTWARE\Google\Chrome\BLBeacon"  # win chrome注册表地址
 
     # 用例配置
     soft_name = "必应首页"
 
-    BROWSER = "Chrome"    # 启动浏览器
+    BROWSER = "Chrome"  # 启动浏览器
 
     url = "http://www.bing.com"  # 首页
 
@@ -35,9 +34,9 @@ class BaseConf(object):
 
     TIMEOUT = 12  # 元素等待超时时间
 
-    exists = 10    # 元素存在等待时间
+    exists = 10  # 元素存在等待时间
 
-    report_title = "必应首页自动化测试报告"     # 报告名字
+    report_title = "必应首页自动化测试报告"  # 报告名字
 
     # 不执行的测试集
     skip_suite = []
@@ -48,25 +47,25 @@ class BaseConf(object):
 
     ROOT = os.path.dirname(os.path.abspath(__file__))
 
-    report_path = os.path.join(ROOT, "Report")        # 报告路径
+    report_path = os.path.join(ROOT, "report")  # 报告路径
 
-    driver_dir = os.path.join(ROOT, "chromedriver")   # 驱动路径
+    driver_dir = os.path.join(ROOT, "chromedriver")  # 驱动路径
 
-    pic_dir = os.path.join(ROOT, "ErrorPic")          # 截图路径
+    pic_dir = os.path.join(ROOT, "screenshot")  # 截图路径
 
-    suite_name = "TestSuite"
+    suite_name = "tests"
 
-    suite_dir = os.path.join(ROOT, suite_name)       # 测试套件路径
+    suite_dir = os.path.join(ROOT, suite_name)  # 测试套件路径
 
     report_mod = os.path.join(ROOT, "templates", "report_template.html")
 
-    xmind = os.path.join(ROOT, "Xmind")
+    xmind = os.path.join(ROOT, "xmind_data")
 
-    LOG_DIR = os.path.join(ROOT, "Log")               # 日志地址
+    LOG_DIR = os.path.join(ROOT, "logs")  # 日志地址
 
-    LOGGER = "webdriver_test"                         # 日志名
+    LOGGER = "webdriver_test"  # 日志名
 
-    # 失败重跑次数
+    # 失败重跑次数（全局）
     RETRY = 0
 
     # 定位方法映射
@@ -86,14 +85,13 @@ class BaseConf(object):
     MYSQL_USER = "yours"
     MYSQL_PWD = "yours"
 
-    #xmind头文件配置
-    xmind_head = ["from TestSuite.base_case import BaseCase",
-                  "from Tools.decorator import screenshot"]
+    # xmind头文件配置
+    xmind_head = ["from tests.base_case import BaseCase",
+                  "from util.decorator import screenshot"]
 
 
 class TiebaConf(BaseConf):
-
-    url = "http://tieba.baidu.com"      # 测试百度贴吧配置
+    url = "http://tieba.baidu.com"  # 测试百度贴吧配置
 
 
 def set_config():

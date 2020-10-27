@@ -7,7 +7,6 @@ from config import Config
 
 
 class Install(object):
-
     xmind_dir = "xmind-sdk-python-master"
     xmind_url = "https://codeload.github.com/xmindltd/xmind-sdk-python/zip/master"
     xmind_zip = "xmind.zip"
@@ -17,7 +16,7 @@ class Install(object):
     if Config.SYS == "win":
         pip, py = "pip", "python"
     else:
-        pip, py = "pip3", "python3"
+        pip, py = "pip3", "python3.6"
 
     def mk_dir(self):
         if not os.path.exists(self.dir_path):
