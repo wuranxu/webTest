@@ -43,10 +43,14 @@ class Tools(object):
     def get_case_cls(cls, module, file, cls_name):
         for c in cls_name:
             _class = getattr(module, c)
-            if hasattr(_class, "test") and hasattr(_class, "setUp") and _class.__name__ != "Base_Case":
+            if cls.is_test_class(_class) and hasattr(_class, "setUp") and _class.__name__ != "Base_Case":
                 return _class, _class.__name__
         else:
             raise Exception("{}文件中未找到测试类!".format(file))
+
+    @classmethod
+    def is_test_class(cls, _class):
+        return len([x for x in dir(_class) if x.startswith("test")]) > 0
 
     @classmethod
     def get_case_name(cls, case_cls):
