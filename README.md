@@ -44,7 +44,7 @@
 
 进入下载好的webTest目录，并在此目录运行安装依赖, 需要安装好pip(默认自带的就行)
 
-mac/Linux/windows: ```pip3 install -r requirements.py -i https://pypi.douban.com/simple```
+mac/Linux/windows: ```pip3 install -r requirements.txt -i https://pypi.douban.com/simple```
 
 - 运行demo
 
