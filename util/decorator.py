@@ -15,8 +15,8 @@ Log = Logger().logger
 def wait(func):
     @wraps(func)
     def wrapper(*args, **kwargs):
-        Log.info("当前Page: {} 操作: {} 控件名: {}".format(
-            args[1].file, func.__name__, "->".join([str(x) for x in args[1:]])))
+        Log.info("当前Page: {} 操作: {} 控件名: {} 定位方式: [{}] 元素: [{}]".format(
+            args[1].file, func.__name__, "->".join([str(x) for x in args[1:]]), args[1].method, args[1].value, ))
         try:
             WebDriverWait(args[0], Config.TIMEOUT).until(EC.element_to_be_clickable(
                 (getattr(By, args[1].method), args[1].value)))

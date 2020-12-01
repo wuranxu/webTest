@@ -30,11 +30,10 @@ class Suite(unittest.TestSuite):
                     self._tearDownPreviousClass(test, result)
                     self._handleModuleFixture(test, result)
                     self._handleClassSetUp(test, result)
-                    # result._previousTestClass = test.__class__
+                    result._previousTestClass = test.__class__
                     if (getattr(test.__class__, '_classSetupFailed', False) or
                             getattr(result, '_moduleSetUpFailed', False)):
                         continue
-
                 self.logger.info("用例: {}正在尝试第{}次运行!".format(test.__class__.__name__, i))
                 if not debug:
                     test(result)
