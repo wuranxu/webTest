@@ -158,7 +158,7 @@
                                 {% if case[2] != 'success' and case[2] != 'info' %}
                                     {% if conf.screenshot %}
                                         <td><a class="ant-btn ant-btn-sm screenshot"
-                                               title="data:image/png;base64,{{ conf.screenshot.get(case[0]) }}"
+                                               title="data:image/png;base64,{{ conf.screenshot.get(case[5]) }}"
                                                type="button">screenshot</a>
                                             {% if "success" not in case[2] %}
                                                 &nbsp

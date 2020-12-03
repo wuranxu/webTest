@@ -57,17 +57,17 @@ def generate_bs64(filename):
     return b64
 
 
-def update_pic_info(case_id, filename):
+def update_pic_info(case_id, test_func, filename):
     if hasattr(Config, "screenshot"):
-        getattr(Config, "screenshot").update({case_id: generate_bs64(filename)})
+        getattr(Config, "screenshot").update({case_id + "_" + test_func: generate_bs64(filename)})
     else:
-        setattr(Config, "screenshot", {case_id: generate_bs64(filename)})
+        setattr(Config, "screenshot", {case_id + "_" + test_func: generate_bs64(filename)})
 
 
-def screen(driver, func, case_id):
+def screen(driver, func, case_id, test_func):
     t = Tools(driver)
     filename = t.get_pic(func.__name__, case_id)
-    update_pic_info(case_id, filename)
+    update_pic_info(case_id, test_func, filename)
 
 
 def pic(*params):
@@ -113,7 +113,7 @@ def pic(*params):
                     Log.warning("{}_{}用例第{}次失败: {}".format(
                         args[0].__class__.__name__, params[0].__name__, i, error.__str__()))
             else:
-                screen(driver, params[0], case_id)
+                screen(driver, params[0], case_id, args[0]._testMethodName)
                 if isinstance(error, AssertionError):
                     assert 0, "错误信息: {}".format(str(error))
                 else:
@@ -134,7 +134,7 @@ def screenshot(func):
             error = e
             Log.warning("{}_{}用例运行失败: {}".format(
                 args[0].__class__.__name__, func.__name__, error.__str__()))
-            screen(driver, func, case_id)
+            screen(driver, func, case_id, args[0]._testMethodName)
             if isinstance(error, AssertionError):
                 assert 0, "Info: {}".format(str(error))
             else:

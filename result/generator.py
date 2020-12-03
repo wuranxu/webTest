@@ -34,6 +34,7 @@ def generate(result, startTime):
 
     for case in test_cases:
         case_id = case.get("case_id")
+        case_pic = case.get("case_id") + "_" + case['case']._testMethodName
         _case = case.get("case")
         msg = case.get("msg")
         msg = msg[1].__str__() if msg and case["type"] != "info" else msg
@@ -50,7 +51,7 @@ def generate(result, startTime):
             case_des = "登录初始化模块"
         else:
             case_des = getattr(getattr(_case, case_name), "__doc__")
-        test_cases_list.append((case_id, suite, status, msg, case_des))
+        test_cases_list.append((case_id, suite, status, msg, case_des, case_pic))
     # 通过case_id排序
     # test_cases_list = sorted(test_cases_list, key=lambda x: x[0])
     total_test = len(test_cases_list)
