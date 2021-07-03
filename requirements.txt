@@ -6,3 +6,5 @@ pymongo>=3.5.1
 pyvirtualdisplay>=0.2.1
 beautifulsoup4>=4.6.0
 xmind
+playwright~=1.12.1
+logbook

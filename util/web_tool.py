@@ -10,12 +10,12 @@ from config import Config
 
 class Tools(object):
 
-    def __init__(self, driver):
+    def __init__(self, page):
         """
         传入driver实例, 封装driver的方法
         :param driver:
         """
-        self.driver = driver
+        self.page = page
         # self.ocr = AipOcr(self.APP_ID, self.API_KEY, self.SECRET_KEY)
 
     def get_pic(self, func_name, case_id=None):
@@ -31,7 +31,7 @@ class Tools(object):
         Utils.make_dir(pic)
         filename = os.path.join(pic,
                                 "{} {}.png".format(func_name, datetime.strftime(datetime.now(), "%Y-%m-%d %H-%M-%S")))
-        self.driver.get_screenshot_as_file(filename)
+        self.page.screen(filename)
         return filename
 
     @classmethod

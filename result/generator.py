@@ -34,7 +34,7 @@ def generate(result, startTime):
 
     for case in test_cases:
         case_id = case.get("case_id")
-        case_pic = case.get("case_id") + "_" + case['case']._testMethodName
+        case_pic = case.get("case_id") + "_" + getattr(case['case'], "_testMethodName", "unknown")
         _case = case.get("case")
         msg = case.get("msg")
         msg = msg[1].__str__() if msg and case["type"] != "info" else msg
@@ -43,7 +43,7 @@ def generate(result, startTime):
         if suite is None:
             suite = getattr(Config, "case_info").get(
                 str(re.findall(r"\((.+)\)", _case.description)[0].split(".")[-1]))
-        if getattr(_case, "_testMethodName"):
+        if hasattr(_case, "_testMethodName") and getattr(_case, "_testMethodName"):
             case_name = getattr(_case, "_testMethodName")
         else:
             case_name = re.findall(r"\((.+)\)", _case.description)[0].split(".")[-1]

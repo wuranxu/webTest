@@ -1,6 +1,6 @@
 import unittest
 from config import Config
-from util.logger import Logger
+from util.logger import Log
 
 
 def _isnotsuite(test):
@@ -12,7 +12,7 @@ def _isnotsuite(test):
 
 
 class Suite(unittest.TestSuite):
-    logger = Logger().logger
+    logger = Log()
 
     def run(self, result, debug=False):
         topLevel = False
@@ -34,7 +34,7 @@ class Suite(unittest.TestSuite):
                     if (getattr(test.__class__, '_classSetupFailed', False) or
                             getattr(result, '_moduleSetUpFailed', False)):
                         continue
-                self.logger.info("用例: {}正在尝试第{}次运行!".format(test.__class__.__name__, i))
+                Suite.logger.info("用例: {}正在尝试第{}次运行!".format(test.__class__.__name__, i))
                 if not debug:
                     test(result)
                 else:
@@ -52,11 +52,11 @@ class Suite(unittest.TestSuite):
                         # 说明没有失败or错误, 停止重试
                         break
                     elif error is not None:
-                        self.logger.warning("用例: {} 第{}次失败 原因: {}".format(test.__class__.__name__,
+                        Suite.logger.warning("用例: {} 第{}次失败 原因: {}".format(test.__class__.__name__,
                                                                           i, str(result.errors[error]['msg'])))
                         del result.errors[error]
                     elif fail is not None:
-                        self.logger.warning("用例: {} 第{}次失败 原因: {}".format(test.__class__.__name__,
+                        Suite.logger.warning("用例: {} 第{}次失败 原因: {}".format(test.__class__.__name__,
                                                                           i, str(result.failures[fail]['msg'])))
                         del result.failures[fail]
                     result._previousTestClass = test.__class__

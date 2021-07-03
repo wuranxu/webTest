@@ -4,20 +4,19 @@ import sys
 import unittest
 from datetime import datetime
 
+from playwright.sync_api import sync_playwright
+
+from config import Config
 from result.generator import generate
-from result.text_test_result import result
 from result.suite import Suite
-from util.chrome import Browser
+from result.text_test_result import result
 from util.utils import Utils
 from util.web_tool import Tools
-from util.xmind_reader import Xmind
-from config import Config
 
 sys.path.append(os.getcwd())
 
 
 def create_suite():
-    get_xmind_case()  # 生成Xmind
     suite = Suite()
     all_case = Tools.get_all_case()
     case_info = {}
@@ -32,15 +31,6 @@ def create_suite():
     return suite
 
 
-def get_xmind_case():
-    for root, dirs, files in os.walk(Config.xmind):
-        for file in files:
-            if file.endswith("xmind_data"):
-                xd = Xmind(file)
-                data = xd.parse()
-                xd.parse_to_case(data)
-
-
 def write_report(html):
     file = "report{}.html".format(datetime.strftime(datetime.now(), "%Y-%m-%d %H-%M-%S"))
     Utils.make_dir(Config.report_path)
@@ -51,11 +41,11 @@ def write_report(html):
         file.write(html)
 
 
-def run():
-    Browser.set_browser()
+def run(playwright):
     start = datetime.now()
     suite = create_suite()
     Config.CASE_NUM = len(getattr(suite, "_tests"))
+    Config.playwright = playwright
     runner = unittest.TextTestRunner(resultclass=result)
     rt = runner.run(suite)
     html, info, rv = generate(rt, start)
@@ -63,4 +53,5 @@ def run():
 
 
 if __name__ == "__main__":
-    run()
+    with sync_playwright() as playwright:
+        run(playwright)

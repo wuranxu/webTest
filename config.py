@@ -26,7 +26,9 @@ class BaseConf(object):
 
     BROWSER = "Chrome"  # 启动浏览器
 
-    url = "http://www.bing.com"  # 首页
+    cookie = None
+
+    url = "https://www.baidu.cn"  # 首页
 
     system = platform.platform()  # 系统信息
 
@@ -63,7 +65,7 @@ class BaseConf(object):
 
     LOG_DIR = os.path.join(ROOT, "logs")  # 日志地址
 
-    LOGGER = "webdriver_test"  # 日志名
+    LOG_NAME = os.path.join(LOG_DIR, "webTest.log")
 
     # 失败重跑次数（全局）
     RETRY = 0

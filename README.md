@@ -3,22 +3,20 @@
 
 ### 简介
 
-    本框架基于Python3+selenium3+unittest组成，用户以Page Object的模式编写用例。
+    本框架基于Python3+playwright+unittest组成，用户以Page Object的模式编写用例。
 
     元素的定位和操作按照页面划分，达到Web端自动化回归测试的目的，
     并生成测试报告。浏览器兼容性暂时未完善。
 
-    本例子展示了一个必应首页搜索"龙珠超"的测试用例，比较简陋。
+特点:
 
-列举一下相关的亮点:
-
-- ❤️ 支持xmind文件转为测试用例，目前存在部分问题
-- 💛 支持chrome驱动自动下载
 - 💚 支持用例重跑及自动错误截图
 - 💙 使用antd美化html报告
 - 💜 采用po模式，定位元素与实际操作分离，同一个页面的操作代码可复用
 - 🖤 优化api，智能等待用例，拒绝代码中time.sleep等待元素
-- 💔 其他（可在下方留言或github issue提需求）
+- 💔 支持视频录制功能(playwright自带)
+- 封装自带Api，与selenium保持统一
+
 
 ### 运行日志
 
@@ -44,7 +42,14 @@
 
 进入下载好的webTest目录，并在此目录运行安装依赖, 需要安装好pip(默认自带的就行)
 
-mac/Linux/windows: ```pip3 install -r requirements.txt -i https://pypi.douban.com/simple```
+mac/Linux/windows: 
+```pip3 install -r requirements.txt -i https://pypi.douban.com/simple```
+
+- 安装playwright相关浏览器
+
+```shell
+playwright install
+```
 
 - 运行demo
 
@@ -65,54 +70,6 @@ mac/Linux/windows: ```pip3 install -r requirements.txt -i https://pypi.douban.co
 - Python3.x
 - Chrome浏览器
 
-
-### 目录结构
-
-
-```
-project
-
-└───error
-|
-└───database
-|
-└───logs
-|
-└───xmind
-|
-└───page
-|
-└───report
-|
-└───tests
-|   |    base_case.py
-|
-└───templates
-|   |   report_templates.html
-└───result
-|   |   report_templates.html
-|   |   generator.py
-|   |   text_test_result.py
-|
-└───chromedriver
-│   │   chromedriver.exe
-|
-└───util
-|   |   chrome.py
-|   |   decorator.py
-|   |   driver.py
-|   |   utils.py
-|   |   logger.py
-|   |   web_tool.py
-|
-│   README.md
-│   run_case.py
-|   requirements.txt
-│   config.py
-|   webdriver_test.log
-
-
-```
 
 ### 内容介绍
 
@@ -194,10 +151,6 @@ project
     用于解析xmind文件，暂时不支持过于复杂的xmind。用例的大概编写方式如下图。
     ![image](http://upload-images.jianshu.io/upload_images/6053915-4f08935ff9ddff18.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
-- xmind
-
-  存放Xmind文件, xmind文件用于编写测试用例。
-
 
 - config.py
 
@@ -215,8 +168,6 @@ project
 
   存放测试用例执行时候的有关操作和错误信息等。
 
-
-#### 注: 以上目录结构/命名可能并不合理, 还望海涵。
 
 ---
 
@@ -240,11 +191,9 @@ project
 
   目录中有install.py, 安装好Python之后, 在终端窗口中输入如下命令:
 
-  Linux/mac: ```python3 install.py```
+  Linux/mac: ```pip3 install -r requirements.txt```
 
-  windows: ```python install.py```
-
-  注意: 安装时需要带上install.py路径或者进入该文件所在目录。
+  windows: ```pip3 install -r requirements.txt```
 
 
 - Pycharm配置(若有)
@@ -293,122 +242,13 @@ project
   - 用例需要以test开头如test_bmp
   - 用例的test函数需要带上screenshot的装饰器, 不带无截图功能
   - 报告会按照时间生成, 且会写入2份report.html
-  - 日志在webdriver_test.log查看
+  - 日志在logs/webTest.log查看
   - Page页面编写此页面需要的操作及元素
   - Location类是封装了WebElement, 其中包含name, value, 默认以css方式定位
   - Location类实例化的时候可指定第三个参数, 方便使用其他定位的同学。如:
 
     ```menu = Location("大后台左侧菜单", ".menuItem", "XPATH")```
-
-  Xmind:
-
-  - 画布(必填)
-
-    为TestSuite名, 可允许重复画布名
-
-  - 根元素(必填)
-
-    为用例的Class名
-
-  - 描述(最好有)
-
-    为该用例的测试点
-
-  - 页面(必填)
-
-    需要填写Page下的页面, 子节点为其页面下需要用到的方法, 方法后如果还有子节点，则为该方法返回值, 若有多个返回值则用;分割且该返回值会被保留方便做断言
-
-  - 跳过(不填默认生成用例)
-
-    不为True的时候均会生成用例
-
-  - 重跑次数(可选)
-
-    用例若失败, 重新运行的次数, 默认为0。
-
-  - 步骤(必填)
-
-    子节点为页面方法或断言, 若以assert开头则为断言, 否则则判断为方法, 若在页面中忘了填写该方法, 则调用系统内部方法。
-
-    方法节点的子节点为参数, 同样以;分割。
-
-    断言的子节点为2或3个, 如assertEqual, 可理解是```A==B?true:msg```, 最后一个参数是msg, 具体出错原因。
-
-  - 已知缺陷
-    1. 截止到现在还未支持非页面方法调用如print;
-    2. 不支持导入本用例需要的其他类库;
-    3. 其他不爽的有待补充。
-
-
-
-### 亮痛点
-
-- 浏览器驱动
-
-  - 问题: 浏览器驱动偶尔会与浏览器对应不上
-  - 解决方案: 自动下载, 但只针对mac/win下的chrome, 且版本不能太低。firefox不支持, 任性。
-
-- 集成jenkins
-
-  - 问题: centos6.x不带桌面无法运行UI自动化用例
-  - 解决方案:
-
-    1. phantomJs(不合适, 还是要写出来)
-
-       新版selenium使用的时候会提示被废弃, 建议用无头模式取代, 且运行不稳定。
-
-    2. Chrome无头模式(centos7以上应可行)
-
-       由于jenkins所在机器centos6.x版本过低, 被Chrome放弃支持, Chrome浏览器无法安装
-
-    3. Firefox无头模式(目测不可行, 测太多次了记不住)
-
-       Firefox可正常安装, 但是geckodriver比较挑浏览器版本, 多次试验不成功, 换了无数个浏览器版本+geckodriver版本后已经忘了是否可行。
-
-    4. Firefox+虚拟桌面(目前解决方案)
-
-       见用例driver.py文件。但不完美, 错误截图显示的网页内容都····一言难尽, 好像一个瞎子终于重获光明却发现自己满脸麻子。回到正题, 为什么不自动同步firefox驱动, 因为在c方案卡壳太久比较恶心。
-
-       版本信息:
-
-       geckodriver0.16
-
-       selenium>=3.4
-
-       firefox52.0
-
-- 测试报告
-
-  由于邮件不支持js和引入的css, 导致报告巨难看。所以采用了附件形式, 目前是个比较大的痛点。
   
-- Page Object
+### 通过cookie控制免登陆
 
-  关于po, 确实也没有很深的研究, 只等小白鼠试水了。
-  
-- api封装
-
-  api封装得还不够多, 除了常用方法以外。但是基本上每个方法都插入了显示等待, 大大降低了元素找不到, 点不到, 各种不到的可能性。
-  
-- 重跑
-
-  解决了使用装饰器重跑用例不执行setUp+tearDown的问题。
-  
-- 错误截图
-
-  截图用base64保存, 所以只有错误的时候才会截图。因为base64太大。
-  
-- Xmind编写用例
-
-  这算一个小亮点吧。
-  
-- 自动化配置环境
-
-  已完成, 方便使用。
-  
-- 数据库
-
-  支持mongo和mysql。
-
-- 执行效率
-
-  目前是单线程, 后续可能会支持异步。
+  参考base_case.py

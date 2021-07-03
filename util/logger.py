@@ -1,37 +1,46 @@
-import logging
-import os
 import sys
 
+import logbook
+
 from config import Config
-from util.utils import Utils
 
 
-class Logger(object):
+class SingletonDecorator:
+    def __init__(self, cls):
+        self.cls = cls
+        self.instance = None
 
-    def __init__(self, filename=Config.LOGGER):
+    def __call__(self, *args, **kwargs):
+        if self.instance is None:
+            self.instance = self.cls(*args, **kwargs)
+        return self.instance
 
-        # 获取logger实例，如果参数为空则返回root logger
-        self.logger = logging.getLogger(filename)
 
-        # 指定logger输出格式
-        formatter = logging.Formatter('%(asctime)s %(levelname)-8s: %(message)s')
+@SingletonDecorator
+class Log(object):
+    handler = None
 
-        # 文件日志
-        Utils.make_dir(Config.LOG_DIR)
-        file_handler = logging.FileHandler("{}.log".format(
-            os.path.join(Config.LOG_DIR, filename)), encoding="utf-8")
-        file_handler.setFormatter(formatter)  # 可以通过setFormatter指定输出格式
+    def __init__(self, name='webTest', filename=Config.LOG_NAME):  # Logger标识默认为app
+        """
+        :param name: 业务名称
+        :param filename: 文件名称
+        """
+        self.handler = logbook.FileHandler(filename, encoding='utf-8', bubble=True)
+        self.sys_handler = logbook.StreamHandler(sys.stdout)
+        logbook.set_datetime_format("local")  # 将日志时间设置为本地时间
+        self.logger = logbook.Logger(name)
+        self.logger.handlers.append(self.handler)
+        self.logger.handlers.append(self.sys_handler)
+        # self.handler.push_application()
 
-        # 控制台日志
-        console_handler = logging.StreamHandler(sys.stdout)
-        console_handler.formatter = formatter  # 也可以直接给formatter赋值
+    def info(self, *args, **kwargs):
+        return self.logger.info(*args, **kwargs)
 
-        # 为logger添加的日志处理器
-        if file_handler.baseFilename not in \
-                [x.baseFilename for x in self.logger.handlers if getattr(x, "baseFilename", False)]:
-            self.logger.addHandler(file_handler)
-            self.logger.addHandler(console_handler)
+    def error(self, *args, **kwargs):
+        return self.logger.error(*args, **kwargs)
 
-        # 指定日志的最低输出级别，默认为WARN级别
-        self.logger.setLevel(logging.INFO)
+    def warning(self, *args, **kwargs):
+        return self.logger.warning(*args, **kwargs)
 
+    def debug(self, *args, **kwargs):
+        return self.logger.debug(*args, **kwargs)

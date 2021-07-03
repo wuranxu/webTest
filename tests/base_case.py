@@ -12,7 +12,7 @@ class BaseCase(unittest.TestCase):
 
     def _initial(self):
         self.case_id = self.__class__.__name__
-        lg = Login()
+        lg = Login(record_video_dir="./videos")
         try:
             self.driver = lg.login()
         except Exception as e:

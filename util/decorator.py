@@ -1,21 +1,22 @@
 import base64
 from functools import wraps
+
 from selenium.common.exceptions import ElementNotVisibleException
 from selenium.webdriver.common.by import By
-from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.support.wait import WebDriverWait
 
-from util.logger import Logger
-from util.web_tool import Tools
 from config import Config
+from util.logger import Log
+from util.web_tool import Tools
 
-Log = Logger().logger
+log = Log()
 
 
 def wait(func):
     @wraps(func)
     def wrapper(*args, **kwargs):
-        Log.info("当前Page: {} 操作: {} 控件名: {} 定位方式: [{}] 元素: [{}]".format(
+        log.info("当前Page: {} 操作: {} 控件名: {} 定位方式: [{}] 元素: [{}]".format(
             args[1].file, func.__name__, "->".join([str(x) for x in args[1:]]), args[1].method, args[1].value, ))
         try:
             WebDriverWait(args[0], Config.TIMEOUT).until(EC.element_to_be_clickable(
@@ -24,7 +25,7 @@ def wait(func):
             #     lambda x: x.find_element(getattr(By, args[1].method), args[1].value).send_keys("1")
             # )
         except Exception:
-            Log.error("等待元素可点击超时! \n文件名: {}\n函数名: {}\n控件名: {} 定位: [{} -> {}]".format(
+            log.error("等待元素可点击超时! \n文件名: {}\n函数名: {}\n控件名: {} 定位: [{} -> {}]".format(
                 args[1].file, func.__name__, args[1].name, args[1].method, args[1].value))
             assert 0, "等待元素可点击超时! \n文件名: {}\n函数名: {}\n控件名: {} 定位: [{} -> {}]".format(
                 args[1].file, func.__name__, args[1].name, args[1].method, args[1].value)
@@ -36,13 +37,13 @@ def wait(func):
 def found(func):
     @wraps(func)
     def wrapper(*args, **kwargs):
-        Log.info("页面: {} 操作: {} 控件名: {}".format(
+        log.info("页面: {} 操作: {} 控件名: {}".format(
             args[1].file, func.__name__, "->".join([str(x) for x in args[1:]])))
         try:
             WebDriverWait(args[0], Config.TIMEOUT).until(EC.visibility_of_any_elements_located(
                 (getattr(By, args[1].method), args[1].value)))
         except ElementNotVisibleException:
-            Log.error("等待元素超时! \n文件名: {}\n函数名: {}\n控件名: {} 定位: [{} -> {}]".format(
+            log.error("等待元素超时! \n文件名: {}\n函数名: {}\n控件名: {} 定位: [{} -> {}]".format(
                 args[1].file, func.__name__, args[1].name, args[1].method, args[1].value))
             raise ElementNotVisibleException("等待元素超时! \n文件名: {}\n函数名: {}\n控件名: {} 定位: [{} -> {}]".format(
                 args[1].file, func.__name__, args[1].name, args[1].method, args[1].value))
@@ -77,7 +78,7 @@ def pic(*params):
         def decorator(func):
             @wraps(func)
             def wrapper(*args, **kwargs):
-                Log.info("当前运行测试用例: {} 函数: {}".format(args[0].__class__.__name__, func.__name__))
+                log.info("当前运行测试用例: {} 函数: {}".format(args[0].__class__.__name__, func.__name__))
                 driver = args[0].driver
                 case_id = args[0].case_id
                 error = None
@@ -86,10 +87,10 @@ def pic(*params):
                         return func(*args, **kwargs)
                     except (AssertionError, Exception) as e:
                         error = e
-                        Log.warning("{}_{}用例第{}次失败: {}".format(
+                        log.warning("{}_{}用例第{}次失败: {}".format(
                             args[0].__class__.__name__, func.__name__, i, error.__str__()))
                 else:
-                    screen(driver, func, case_id)
+                    screen(driver.page, func, case_id)
                     if isinstance(error, AssertionError):
                         assert 0, "错误信息: {}".format(str(error))
                     else:
@@ -101,7 +102,7 @@ def pic(*params):
     else:
         @wraps(params[0])
         def wrapper(*args, **kwargs):
-            Log.info("当前运行测试用例id: {} 名称: {}".format(args[0].__class__.__name__, params[0].__name__))
+            log.info("当前运行测试用例id: {} 名称: {}".format(args[0].__class__.__name__, params[0].__name__))
             driver = args[0].driver
             case_id = args[0].case_id
             error = None
@@ -110,10 +111,10 @@ def pic(*params):
                     return params[0](*args, **kwargs)
                 except (AssertionError, Exception) as e:
                     error = e
-                    Log.warning("{}_{}用例第{}次失败: {}".format(
+                    log.warning("{}_{}用例第{}次失败: {}".format(
                         args[0].__class__.__name__, params[0].__name__, i, error.__str__()))
             else:
-                screen(driver, params[0], case_id, args[0]._testMethodName)
+                screen(driver.page, params[0], case_id, args[0]._testMethodName)
                 if isinstance(error, AssertionError):
                     assert 0, "错误信息: {}".format(str(error))
                 else:
@@ -125,16 +126,16 @@ def pic(*params):
 def screenshot(func):
     @wraps(func)
     def wrapper(*args, **kwargs):
-        Log.info("当前运行测试用例id: {} 名称: {}".format(args[0].__class__.__name__, func.__name__))
+        log.info("当前运行测试用例id: {} 名称: {}".format(args[0].__class__.__name__, func.__name__))
         driver = args[0].driver
         case_id = args[0].case_id
         try:
             return func(*args, **kwargs)
         except (AssertionError, Exception) as e:
             error = e
-            Log.warning("{}_{}用例运行失败: {}".format(
+            log.warning("{}_{}用例运行失败: {}".format(
                 args[0].__class__.__name__, func.__name__, error.__str__()))
-            screen(driver, func, case_id, args[0]._testMethodName)
+            screen(driver.page, func, case_id, args[0]._testMethodName)
             if isinstance(error, AssertionError):
                 assert 0, "Info: {}".format(str(error))
             else:
