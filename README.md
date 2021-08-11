@@ -2,7 +2,7 @@
 
 ## 快速开始
 
-  [项目地址](https://webTest.readthedocs.org)
+  [项目地址](https://webUITest.readthedocs.org)
 
 ### 简介
 
