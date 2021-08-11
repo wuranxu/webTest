@@ -1,8 +1,5 @@
 # webTest框架介绍
 
-## 快速开始
-
-  [项目地址](https://webTest.readthedocs.org)
 
 ### 简介
 
@@ -25,23 +22,25 @@
 
 ### 运行日志
 
-![image.png](http://upload-images.jianshu.io/upload_images/6053915-6b49d999bd81fd03.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![image.png](https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/ef53840cc16949948fc723252eca81c7~tplv-k3u1fbpfcp-watermark.image)
 
 ### 过程截图
 
-![image.png](http://upload-images.jianshu.io/upload_images/6053915-2f1cb468358719c9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![image.png](https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/10a8b5fb3205465e868ab15271519aae~tplv-k3u1fbpfcp-watermark.image)
 
 
 ### 效果展示
 
-![image.png](https://upload-images.jianshu.io/upload_images/6053915-792a2f538e5e2bb7.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![image.png](https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/78f6e4a91d084e3bbd1240ef9dad9284~tplv-k3u1fbpfcp-watermark.image)
+
 ### 快速上手
 
 - 从远程仓库拉取代码
 
 ```git clone https://github.com/wuranxu/webTest.git```
 
-![image.png](http://upload-images.jianshu.io/upload_images/6053915-535641f29e7df072.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+
+![image.png](https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/ab344836a0254ea79eb22b14485829e9~tplv-k3u1fbpfcp-watermark.image)
 
 - 安装依赖包
 
@@ -55,7 +54,8 @@ mac/Linux/windows: ```pip3 install -r requirements.txt -i https://pypi.douban.co
 
 ```python3 start_test.py```
 
-![image.png](http://upload-images.jianshu.io/upload_images/6053915-3698662b1b177b18.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+
+![image.png](https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/7e37915718d0451e8a6a1b83f24cc562~tplv-k3u1fbpfcp-watermark.image)
 
 #### 配置说明
 
@@ -195,7 +195,8 @@ project
   - xmind_reader.py
 
     用于解析xmind文件，暂时不支持过于复杂的xmind。用例的大概编写方式如下图。
-    ![image](http://upload-images.jianshu.io/upload_images/6053915-4f08935ff9ddff18.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+
+![image.png](https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/770ff54e56c44d61bf0f2bc259504589~tplv-k3u1fbpfcp-watermark.image)
 
 - xmind
 
@@ -256,35 +257,42 @@ project
 
     File->Open
 
-  ![image.png](http://upload-images.jianshu.io/upload_images/6053915-01ed844c0870d6c7.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+
+![image.png](https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/f5951c20d9f847cf9730fdb800cd19c6~tplv-k3u1fbpfcp-watermark.image)
 
    选择webTest目录, 点击窗口右下角的Open
 
-   ![image.png](http://upload-images.jianshu.io/upload_images/6053915-cd6a91df8687e4c0.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![image.png](https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/c1bce212da4f49f0a7cc995bb19a560c~tplv-k3u1fbpfcp-watermark.image)
 
   打开Preferences, 在Project Interpreter里选择刚才安装Python的地址, 点击OK
 
-  ![image.png](http://upload-images.jianshu.io/upload_images/6053915-e4ad74e6fc94703b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![image.png](https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/6c1984fd523743dd8c2364ef07e8a5a1~tplv-k3u1fbpfcp-watermark.image)
 
   - 第二步: 配置start_test.py
 
   点击Edit Configurations
 
- ![image.png](http://upload-images.jianshu.io/upload_images/6053915-7e2c8d7c3be8afb3.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+
+![image.png](https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/675d0ceb238f403b8797e4ffdc7644bc~tplv-k3u1fbpfcp-watermark.image)
 
  如果没有Python配置的话, 点击图中"+"图标, 然后选择Python并添加
- ![image.png](http://upload-images.jianshu.io/upload_images/6053915-5036e9d36e54da08.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
- ![image.png](http://upload-images.jianshu.io/upload_images/6053915-92391a98b0d090c5.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+
+![image.png](https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/f841f300f59943d881e44c606c16bae0~tplv-k3u1fbpfcp-watermark.image)
+
+![image.png](https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/1af8b3b9c392466aa66c314be49147c5~tplv-k3u1fbpfcp-watermark.image)
 
  配置脚本
- ![image.png](http://upload-images.jianshu.io/upload_images/6053915-9bb907d9d3df9026.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+
+
+![image.png](https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/0e9c72d8313443779d691b7de24b8c38~tplv-k3u1fbpfcp-watermark.image)
 
  - 第三步: 运行用例
 
  右击start_test.py, 选择Run则为运行模式, Debug则为调试模式
- ![image.png](http://upload-images.jianshu.io/upload_images/6053915-9eae73a79ef61182.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
+
+![image.png](https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/446b94f5305a463bbb743711e8cfb520~tplv-k3u1fbpfcp-watermark.image)
 
 - 用例编写规则
 
@@ -346,12 +354,12 @@ project
 
 ### 亮痛点
 
-- 浏览器驱动
+- [x] 浏览器驱动
 
   - 问题: 浏览器驱动偶尔会与浏览器对应不上
   - 解决方案: 自动下载, 但只针对mac/win下的chrome, 且版本不能太低。firefox不支持, 任性。
 
-- 集成jenkins
+- [x] 集成jenkins
 
   - 问题: centos6.x不带桌面无法运行UI自动化用例
   - 解决方案:
@@ -380,38 +388,38 @@ project
 
        firefox52.0
 
-- 测试报告
+- [x] 测试报告
 
   由于邮件不支持js和引入的css, 导致报告巨难看。所以采用了附件形式, 目前是个比较大的痛点。
   
-- Page Object
+- [x] Page Object
 
   关于po, 确实也没有很深的研究, 只等小白鼠试水了。
   
-- api封装
+- [x] api封装
 
   api封装得还不够多, 除了常用方法以外。但是基本上每个方法都插入了显示等待, 大大降低了元素找不到, 点不到, 各种不到的可能性。
   
-- 重跑
+- [x] 重跑
 
   解决了使用装饰器重跑用例不执行setUp+tearDown的问题。
   
-- 错误截图
+- [x] 错误截图
 
   截图用base64保存, 所以只有错误的时候才会截图。因为base64太大。
   
-- Xmind编写用例
+- [x] Xmind编写用例
 
   这算一个小亮点吧。
   
-- 自动化配置环境
+- [x] 自动化配置环境
 
   已完成, 方便使用。
   
-- 数据库
+- [x] 数据库
 
   支持mongo和mysql。
 
-- 执行效率
+- [ ] 执行效率
 
   目前是单线程, 后续可能会支持异步。

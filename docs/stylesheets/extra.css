@@ -1,0 +1,11 @@
+.admonition-title {
+	font-size: 16px;
+}
+
+.admonition p {
+	font-size: 13px;
+}
+
+.admonition.pied-piper p:nth-last-child(1) {
+	text-align: center;
+}

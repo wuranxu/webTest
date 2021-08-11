@@ -4,14 +4,14 @@ import sys
 import unittest
 from datetime import datetime
 
+from config import Config
 from result.generator import generate
-from result.text_test_result import result
 from result.suite import Suite
+from result.text_test_result import result
 from util.chrome import Browser
 from util.utils import Utils
 from util.web_tool import Tools
 from util.xmind_reader import Xmind
-from config import Config
 
 sys.path.append(os.getcwd())
 
