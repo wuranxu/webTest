@@ -1,0 +1,1059 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+        <meta name="author" content="wuranxu">
+      
+      
+      <link rel="icon" href="assets/logo.svg">
+      <meta name="generator" content="mkdocs-1.3.0, mkdocs-material-8.3.8">
+    
+    
+      
+        <title>webTest测试框架</title>
+      
+    
+    
+      <link rel="stylesheet" href="assets/stylesheets/main.1d29e8d0.min.css">
+      
+        
+        <link rel="stylesheet" href="assets/stylesheets/palette.cbb835fc.min.css">
+        
+          
+          
+          <meta name="theme-color" content="#ab47bd">
+        
+      
+      
+  
+  
+    
+    
+  
+    
+    
+  
+    
+    
+  
+    
+    
+  
+    
+    
+  
+    
+    
+  
+    
+    
+  
+    
+    
+  
+    
+    
+  
+    
+    
+  
+    
+    
+  
+    
+    
+  
+  
+  <style>:root{--md-admonition-icon--note:url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M2.5 7.775V2.75a.25.25 0 0 1 .25-.25h5.025a.25.25 0 0 1 .177.073l6.25 6.25a.25.25 0 0 1 0 .354l-5.025 5.025a.25.25 0 0 1-.354 0l-6.25-6.25a.25.25 0 0 1-.073-.177zm-1.5 0V2.75C1 1.784 1.784 1 2.75 1h5.025c.464 0 .91.184 1.238.513l6.25 6.25a1.75 1.75 0 0 1 0 2.474l-5.026 5.026a1.75 1.75 0 0 1-2.474 0l-6.25-6.25A1.75 1.75 0 0 1 1 7.775zM6 5a1 1 0 1 0 0 2 1 1 0 0 0 0-2z"/></svg>');--md-admonition-icon--abstract:url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M2.5 1.75a.25.25 0 0 1 .25-.25h8.5a.25.25 0 0 1 .25.25v7.736a.75.75 0 1 0 1.5 0V1.75A1.75 1.75 0 0 0 11.25 0h-8.5A1.75 1.75 0 0 0 1 1.75v11.5c0 .966.784 1.75 1.75 1.75h3.17a.75.75 0 0 0 0-1.5H2.75a.25.25 0 0 1-.25-.25V1.75zM4.75 4a.75.75 0 0 0 0 1.5h4.5a.75.75 0 0 0 0-1.5h-4.5zM4 7.75A.75.75 0 0 1 4.75 7h2a.75.75 0 0 1 0 1.5h-2A.75.75 0 0 1 4 7.75zm11.774 3.537a.75.75 0 0 0-1.048-1.074L10.7 14.145 9.281 12.72a.75.75 0 0 0-1.062 1.058l1.943 1.95a.75.75 0 0 0 1.055.008l4.557-4.45z"/></svg>');--md-admonition-icon--info:url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M8 1.5a6.5 6.5 0 1 0 0 13 6.5 6.5 0 0 0 0-13zM0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm6.5-.25A.75.75 0 0 1 7.25 7h1a.75.75 0 0 1 .75.75v2.75h.25a.75.75 0 0 1 0 1.5h-2a.75.75 0 0 1 0-1.5h.25v-2h-.25a.75.75 0 0 1-.75-.75zM8 6a1 1 0 1 0 0-2 1 1 0 0 0 0 2z"/></svg>');--md-admonition-icon--tip:url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M3.499.75a.75.75 0 0 1 1.5 0v.996C5.9 2.903 6.793 3.65 7.662 4.376l.24.202c-.036-.694.055-1.422.426-2.163C9.1.873 10.794-.045 12.622.26 14.408.558 16 1.94 16 4.25c0 1.278-.954 2.575-2.44 2.734l.146.508.065.22c.203.701.412 1.455.476 2.226.142 1.707-.4 3.03-1.487 3.898C11.714 14.671 10.27 15 8.75 15h-6a.75.75 0 0 1 0-1.5h1.376a4.489 4.489 0 0 1-.563-1.191 3.833 3.833 0 0 1-.05-2.063 4.636 4.636 0 0 1-2.025-.293.75.75 0 1 1 .525-1.406c1.357.507 2.376-.006 2.698-.318l.009-.01a.748.748 0 0 1 1.06 0 .75.75 0 0 1-.012 1.074c-.912.92-.992 1.835-.768 2.586.221.74.745 1.337 1.196 1.621H8.75c1.343 0 2.398-.296 3.074-.836.635-.507 1.036-1.31.928-2.602-.05-.603-.216-1.224-.422-1.93l-.064-.221c-.12-.407-.246-.84-.353-1.29a2.404 2.404 0 0 1-.507-.441 3.063 3.063 0 0 1-.633-1.248.75.75 0 0 1 1.455-.364c.046.185.144.436.31.627.146.168.353.305.712.305.738 0 1.25-.615 1.25-1.25 0-1.47-.95-2.315-2.123-2.51-1.172-.196-2.227.387-2.706 1.345-.46.92-.27 1.774.019 3.062l.042.19a.753.753 0 0 1 .01.05c.348.443.666.949.94 1.553a.75.75 0 1 1-1.365.62c-.553-1.217-1.32-1.94-2.3-2.768a85.08 85.08 0 0 0-.317-.265c-.814-.68-1.75-1.462-2.692-2.619a3.74 3.74 0 0 0-1.023.88c-.406.495-.663 1.036-.722 1.508.116.122.306.21.591.239.388.038.797-.06 1.032-.19a.75.75 0 0 1 .728 1.31c-.515.287-1.23.439-1.906.373-.682-.067-1.473-.38-1.879-1.193L.75 5.677V5.5c0-.984.48-1.94 1.077-2.664.46-.559 1.05-1.055 1.673-1.353V.75z"/></svg>');--md-admonition-icon--success:url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M13.78 4.22a.75.75 0 0 1 0 1.06l-7.25 7.25a.75.75 0 0 1-1.06 0L2.22 9.28a.75.75 0 0 1 1.06-1.06L6 10.94l6.72-6.72a.75.75 0 0 1 1.06 0z"/></svg>');--md-admonition-icon--question:url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M8 1.5a6.5 6.5 0 1 0 0 13 6.5 6.5 0 0 0 0-13zM0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm9 3a1 1 0 1 1-2 0 1 1 0 0 1 2 0zM6.92 6.085c.081-.16.19-.299.34-.398.145-.097.371-.187.74-.187.28 0 .553.087.738.225A.613.613 0 0 1 9 6.25c0 .177-.04.264-.077.318a.956.956 0 0 1-.277.245c-.076.051-.158.1-.258.161l-.007.004a7.728 7.728 0 0 0-.313.195 2.416 2.416 0 0 0-.692.661.75.75 0 0 0 1.248.832.956.956 0 0 1 .276-.245 6.3 6.3 0 0 1 .26-.16l.006-.004c.093-.057.204-.123.313-.195.222-.149.487-.355.692-.662.214-.32.329-.702.329-1.15 0-.76-.36-1.348-.863-1.725A2.76 2.76 0 0 0 8 4c-.631 0-1.155.16-1.572.438-.413.276-.68.638-.849.977a.75.75 0 1 0 1.342.67z"/></svg>');--md-admonition-icon--warning:url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M8.22 1.754a.25.25 0 0 0-.44 0L1.698 13.132a.25.25 0 0 0 .22.368h12.164a.25.25 0 0 0 .22-.368L8.22 1.754zm-1.763-.707c.659-1.234 2.427-1.234 3.086 0l6.082 11.378A1.75 1.75 0 0 1 14.082 15H1.918a1.75 1.75 0 0 1-1.543-2.575L6.457 1.047zM9 11a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm-.25-5.25a.75.75 0 0 0-1.5 0v2.5a.75.75 0 0 0 1.5 0v-2.5z"/></svg>');--md-admonition-icon--failure:url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M3.404 12.596a6.5 6.5 0 1 1 9.192-9.192 6.5 6.5 0 0 1-9.192 9.192zM2.344 2.343a8 8 0 1 0 11.313 11.314A8 8 0 0 0 2.343 2.343zM6.03 4.97a.75.75 0 0 0-1.06 1.06L6.94 8 4.97 9.97a.75.75 0 1 0 1.06 1.06L8 9.06l1.97 1.97a.75.75 0 1 0 1.06-1.06L9.06 8l1.97-1.97a.75.75 0 1 0-1.06-1.06L8 6.94 6.03 4.97z"/></svg>');--md-admonition-icon--danger:url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M10.561 1.5a.016.016 0 0 0-.01.004L3.286 8.571A.25.25 0 0 0 3.462 9H6.75a.75.75 0 0 1 .694 1.034l-1.713 4.188 6.982-6.793A.25.25 0 0 0 12.538 7H9.25a.75.75 0 0 1-.683-1.06l2.008-4.418.003-.006a.02.02 0 0 0-.004-.009.02.02 0 0 0-.006-.006L10.56 1.5zM9.504.43a1.516 1.516 0 0 1 2.437 1.713L10.415 5.5h2.123c1.57 0 2.346 1.909 1.22 3.004l-7.34 7.142a1.25 1.25 0 0 1-.871.354h-.302a1.25 1.25 0 0 1-1.157-1.723L5.633 10.5H3.462c-1.57 0-2.346-1.909-1.22-3.004L9.503.429z"/></svg>');--md-admonition-icon--bug:url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M4.72.22a.75.75 0 0 1 1.06 0l1 .999a3.492 3.492 0 0 1 2.441 0l.999-1a.75.75 0 1 1 1.06 1.061l-.775.776c.616.63.995 1.493.995 2.444v.327c0 .1-.009.197-.025.292.408.14.764.392 1.029.722l1.968-.787a.75.75 0 0 1 .556 1.392L13 7.258V9h2.25a.75.75 0 0 1 0 1.5H13v.5c0 .409-.049.806-.141 1.186l2.17.868a.75.75 0 0 1-.557 1.392l-2.184-.873A4.997 4.997 0 0 1 8 16a4.997 4.997 0 0 1-4.288-2.427l-2.183.873a.75.75 0 0 1-.558-1.392l2.17-.868A5.013 5.013 0 0 1 3 11v-.5H.75a.75.75 0 0 1 0-1.5H3V7.258L.971 6.446a.75.75 0 0 1 .558-1.392l1.967.787c.265-.33.62-.583 1.03-.722a1.684 1.684 0 0 1-.026-.292V4.5c0-.951.38-1.814.995-2.444L4.72 1.28a.75.75 0 0 1 0-1.06zM6.173 5h3.654A.173.173 0 0 0 10 4.827V4.5a2 2 0 1 0-4 0v.327c0 .096.077.173.173.173zM5.25 6.5a.75.75 0 0 0-.75.75V11a3.5 3.5 0 1 0 7 0V7.25a.75.75 0 0 0-.75-.75h-5.5z"/></svg>');--md-admonition-icon--example:url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M5 5.782V2.5h-.25a.75.75 0 0 1 0-1.5h6.5a.75.75 0 0 1 0 1.5H11v3.282l3.666 5.76C15.619 13.04 14.543 15 12.767 15H3.233c-1.776 0-2.852-1.96-1.899-3.458L5 5.782zM9.5 2.5h-3V6a.75.75 0 0 1-.117.403L4.73 9h6.54L9.617 6.403A.75.75 0 0 1 9.5 6V2.5zm-6.9 9.847L3.775 10.5h8.45l1.175 1.847a.75.75 0 0 1-.633 1.153H3.233a.75.75 0 0 1-.633-1.153z"/></svg>');--md-admonition-icon--quote:url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.75 2.5a.75.75 0 0 0 0 1.5h10.5a.75.75 0 0 0 0-1.5H1.75zm4 5a.75.75 0 0 0 0 1.5h8.5a.75.75 0 0 0 0-1.5h-8.5zm0 5a.75.75 0 0 0 0 1.5h8.5a.75.75 0 0 0 0-1.5h-8.5zM2.5 7.75a.75.75 0 0 0-1.5 0v6a.75.75 0 0 0 1.5 0v-6z"/></svg>');}</style>
+
+    
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="stylesheets/extra.css">
+    
+    <script>__md_scope=new URL(".",location),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="" data-md-color-primary="purple" data-md-color-accent="">
+  
+    
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#webtest" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="." title="webTest测试框架" class="md-header__button md-logo" aria-label="webTest测试框架" data-md-component="logo">
+      
+  <img src="assets/logo.svg" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            webTest测试框架
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              立即开始
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/wuranxu/webTest" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.1.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="." title="webTest测试框架" class="md-nav__button md-logo" aria-label="webTest测试框架" data-md-component="logo">
+      
+  <img src="assets/logo.svg" alt="logo">
+
+    </a>
+    webTest测试框架
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/wuranxu/webTest" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.1.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          立即开始
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="." class="md-nav__link md-nav__link--active">
+        立即开始
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    简介
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    运行日志
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    过程截图
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    效果展示
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    快速上手
+  </a>
+  
+    <nav class="md-nav" aria-label="快速上手">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    配置说明
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    环境配置
+  </a>
+  
+    <nav class="md-nav" aria-label="环境配置">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#linuxfirefox" class="md-nav__link">
+    注: 无桌面版Linux目前只做到支持firefox
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    目录结构
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    内容介绍
+  </a>
+  
+    <nav class="md-nav" aria-label="内容介绍">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_10" class="md-nav__link">
+    注: 以上目录结构/命名可能并不合理, 还望海涵。
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_11" class="md-nav__link">
+    使用手册
+  </a>
+  
+    <nav class="md-nav" aria-label="使用手册">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_12" class="md-nav__link">
+    以下内容若已安装, 可跳过。
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_13" class="md-nav__link">
+    亮痛点
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="friends/%E5%85%AC%E4%BC%97%E5%8F%B7/" class="md-nav__link">
+        智囊团
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="friends/%E8%81%94%E7%B3%BB%E4%BD%9C%E8%80%85/" class="md-nav__link">
+        联系作者
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    简介
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    运行日志
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    过程截图
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    效果展示
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    快速上手
+  </a>
+  
+    <nav class="md-nav" aria-label="快速上手">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    配置说明
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    环境配置
+  </a>
+  
+    <nav class="md-nav" aria-label="环境配置">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#linuxfirefox" class="md-nav__link">
+    注: 无桌面版Linux目前只做到支持firefox
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    目录结构
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    内容介绍
+  </a>
+  
+    <nav class="md-nav" aria-label="内容介绍">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_10" class="md-nav__link">
+    注: 以上目录结构/命名可能并不合理, 还望海涵。
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_11" class="md-nav__link">
+    使用手册
+  </a>
+  
+    <nav class="md-nav" aria-label="使用手册">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_12" class="md-nav__link">
+    以下内容若已安装, 可跳过。
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_13" class="md-nav__link">
+    亮痛点
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content" data-md-component="content">
+            <article class="md-content__inner md-typeset">
+              
+                
+
+
+<h1 id="webtest">webTest框架介绍</h1>
+<h3 id="_1">简介</h3>
+<div class="highlight"><pre><span></span><code>本框架基于Python3+selenium3+unittest组成，用户以Page Object的模式编写用例。
+
+元素的定位和操作按照页面划分，达到Web端自动化回归测试的目的，
+并生成测试报告。浏览器兼容性暂时未完善。
+
+本例子展示了一个必应首页搜索&quot;龙珠超&quot;的测试用例，比较简陋。
+</code></pre></div>
+<p>列举一下相关的亮点:</p>
+<ul>
+<li>❤️ 支持xmind文件转为测试用例，目前存在部分问题</li>
+<li>💛 支持chrome驱动自动下载</li>
+<li>💚 支持用例重跑及自动错误截图</li>
+<li>💙 使用antd美化html报告</li>
+<li>💜 采用po模式，定位元素与实际操作分离，同一个页面的操作代码可复用</li>
+<li>🖤 优化api，智能等待用例，拒绝代码中time.sleep等待元素</li>
+<li>💔 其他（可在下方留言或github issue提需求）</li>
+</ul>
+<h3 id="_2">运行日志</h3>
+<p><img alt="image.png" src="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/ef53840cc16949948fc723252eca81c7~tplv-k3u1fbpfcp-watermark.image" /></p>
+<h3 id="_3">过程截图</h3>
+<p><img alt="image.png" src="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/10a8b5fb3205465e868ab15271519aae~tplv-k3u1fbpfcp-watermark.image" /></p>
+<h3 id="_4">效果展示</h3>
+<p><img alt="image.png" src="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/78f6e4a91d084e3bbd1240ef9dad9284~tplv-k3u1fbpfcp-watermark.image" /></p>
+<h3 id="_5">快速上手</h3>
+<ul>
+<li>从远程仓库拉取代码</li>
+</ul>
+<p><code>git clone https://github.com/wuranxu/webTest.git</code></p>
+<p><img alt="image.png" src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/ab344836a0254ea79eb22b14485829e9~tplv-k3u1fbpfcp-watermark.image" /></p>
+<ul>
+<li>安装依赖包</li>
+</ul>
+<p>进入下载好的webTest目录，并在此目录运行安装依赖, 需要安装好pip(默认自带的就行)</p>
+<p>mac/Linux/windows: <code>pip3 install -r requirements.txt -i https://pypi.douban.com/simple</code></p>
+<ul>
+<li>运行demo</li>
+</ul>
+<p>在webTest目录输入命令(确保chrome浏览器已安装, 驱动会自行下载):</p>
+<p><code>python3 start_test.py</code></p>
+<p><img alt="image.png" src="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/7e37915718d0451e8a6a1b83f24cc562~tplv-k3u1fbpfcp-watermark.image" /></p>
+<h4 id="_6">配置说明</h4>
+<div class="highlight"><pre><span></span><code>见config.py，大部分说明都有对应的描述，RETRY是全局重试次数。可以参考XmindTest.py文件里面的retry字段，设置单个用例的重试次数。
+</code></pre></div>
+<h3 id="_7">环境配置</h3>
+<h5 id="linuxfirefox">注: 无桌面版Linux目前只做到支持firefox</h5>
+<ul>
+<li>os: Windows/Mac os x/Linux</li>
+<li>Python3.x</li>
+<li>Chrome浏览器</li>
+</ul>
+<h3 id="_8">目录结构</h3>
+<div class="highlight"><pre><span></span><code>project
+
+└───error
+|
+└───database
+|
+└───logs
+|
+└───xmind
+|
+└───page
+|
+└───report
+|
+└───tests
+|   |    base_case.py
+|
+└───templates
+|   |   report_templates.html
+└───result
+|   |   report_templates.html
+|   |   generator.py
+|   |   text_test_result.py
+|
+└───chromedriver
+│   │   chromedriver.exe
+|
+└───util
+|   |   chrome.py
+|   |   decorator.py
+|   |   driver.py
+|   |   utils.py
+|   |   logger.py
+|   |   web_tool.py
+|
+│   README.md
+│   run_case.py
+|   requirements.txt
+│   config.py
+|   webdriver_test.log
+</code></pre></div>
+<h3 id="_9">内容介绍</h3>
+<ul>
+<li>chromedriver</li>
+</ul>
+<p>存放chromedriver驱动, 若本机未安装chromedriver则自动匹配本机chrome版本下载对应驱动。</p>
+<ul>
+<li>database</li>
+</ul>
+<p>存放Mysql和Mongodb的连接类</p>
+<ul>
+<li>error</li>
+</ul>
+<p>异常分类</p>
+<ul>
+<li>screenshot</li>
+</ul>
+<p>存放出错截图, 目前根据用例名称创建文件夹并存放。</p>
+<ul>
+<li>logs</li>
+</ul>
+<p>存放所有日志文件, 目前只有webdriver_test.log, 主要目的是将日志区分开来。</p>
+<ul>
+<li>page</li>
+</ul>
+<p>页面目录, 可扩展, 针对不同模块的页面可设计不同目录结构。一般存放该页面的操作(Action)以及元素(Location), 用例具体断言不建议写于此处(因人而异)。</p>
+<ul>
+<li>Report</li>
+</ul>
+<p>存放测试报告，为html形式，可右键通过浏览器打开，使用chrome效果尤佳。</p>
+<ul>
+<li>templates</li>
+</ul>
+<p>存放html模板，传入测试结果以生成测试报告。</p>
+<ul>
+<li>
+<p>result</p>
+</li>
+<li>
+<p>generator.py</p>
+<p>是组织测试结果, 生成测试报告, 填入数据至html报告模板的方法。</p>
+</li>
+<li>
+<p>text_test_result.py</p>
+<p>继承自unittest.TextTestResult类, 存放测试结果。</p>
+</li>
+<li>
+<p>tests</p>
+</li>
+</ul>
+<p>测试套件目录, 可扩展, 子目录为某个测试集。测试集中存放测试用例。</p>
+<ul>
+<li>
+<p>base_case.py</p>
+<p>存放基础测试用例。</p>
+</li>
+<li>
+<p>util</p>
+</li>
+<li>
+<p>chrome.py</p>
+<p>用于更新/下载chromedriver, 目前只支持mac os和windows系统。</p>
+</li>
+<li>
+<p>decorator.py</p>
+<p>用于存放自动截图/重跑等装饰器, 主要是为测试函数添加错误截图以及重跑等功能。</p>
+</li>
+<li>
+<p>driver.py</p>
+<p>继承自WebDriver类, 主要用于简化原生api以及添加切换frame/handle等api。</p>
+</li>
+<li>
+<p>logger.py</p>
+<p>记录日志的功能函数。</p>
+</li>
+<li>
+<p>web_tool.py</p>
+<p>用于Web自动化测试的工具类, 包括截图、获取用例等方法。</p>
+</li>
+<li>
+<p>xmind_reader.py</p>
+<p>用于解析xmind文件，暂时不支持过于复杂的xmind。用例的大概编写方式如下图。</p>
+</li>
+</ul>
+<p><img alt="image.png" src="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/770ff54e56c44d61bf0f2bc259504589~tplv-k3u1fbpfcp-watermark.image" /></p>
+<ul>
+<li>xmind</li>
+</ul>
+<p>存放Xmind文件, xmind文件用于编写测试用例。</p>
+<ul>
+<li>config.py</li>
+</ul>
+<p>用于存放绝大部分配置。继承于BaseConf类, 可拥有自己的配置。</p>
+<ul>
+<li>requirements.txt</li>
+</ul>
+<p>用于存放本框架所需库。</p>
+<ul>
+<li>start_test.py</li>
+</ul>
+<p>存放组织用例, 生成测试套件, 运行测试用例等函数。</p>
+<ul>
+<li>webdriver_test.log</li>
+</ul>
+<p>存放测试用例执行时候的有关操作和错误信息等。</p>
+<h4 id="_10">注: 以上目录结构/命名可能并不合理, 还望海涵。</h4>
+<hr />
+<h3 id="_11">使用手册</h3>
+<h5 id="_12">以下内容若已安装, 可跳过。</h5>
+<ul>
+<li>安装Python3</li>
+</ul>
+<p><a href="https://www.python.org/downloads/release/python-364/">Python3.6下载地址</a></p>
+<p>下载对应操作系统的Python版本并安装。</p>
+<ul>
+<li>下载IDE(非必须)</li>
+</ul>
+<p>推荐Pycharm</p>
+<p><a href="https://www.jetbrains.com/pycharm/">Pycharm下载地址</a></p>
+<ul>
+<li>安装必须的库</li>
+</ul>
+<p>目录中有install.py, 安装好Python之后, 在终端窗口中输入如下命令:</p>
+<p>Linux/mac: <code>python3 install.py</code></p>
+<p>windows: <code>python install.py</code></p>
+<p>注意: 安装时需要带上install.py路径或者进入该文件所在目录。</p>
+<ul>
+<li>
+<p>Pycharm配置(若有)</p>
+</li>
+<li>
+<p>第一步: 配置项目Python环境</p>
+<p>File-&gt;Open</p>
+</li>
+</ul>
+<p><img alt="image.png" src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/f5951c20d9f847cf9730fdb800cd19c6~tplv-k3u1fbpfcp-watermark.image" /></p>
+<p>选择webTest目录, 点击窗口右下角的Open</p>
+<p><img alt="image.png" src="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/c1bce212da4f49f0a7cc995bb19a560c~tplv-k3u1fbpfcp-watermark.image" /></p>
+<p>打开Preferences, 在Project Interpreter里选择刚才安装Python的地址, 点击OK</p>
+<p><img alt="image.png" src="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/6c1984fd523743dd8c2364ef07e8a5a1~tplv-k3u1fbpfcp-watermark.image" /></p>
+<ul>
+<li>第二步: 配置start_test.py</li>
+</ul>
+<p>点击Edit Configurations</p>
+<p><img alt="image.png" src="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/675d0ceb238f403b8797e4ffdc7644bc~tplv-k3u1fbpfcp-watermark.image" /></p>
+<p>如果没有Python配置的话, 点击图中"+"图标, 然后选择Python并添加</p>
+<p><img alt="image.png" src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/f841f300f59943d881e44c606c16bae0~tplv-k3u1fbpfcp-watermark.image" /></p>
+<p><img alt="image.png" src="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/1af8b3b9c392466aa66c314be49147c5~tplv-k3u1fbpfcp-watermark.image" /></p>
+<p>配置脚本</p>
+<p><img alt="image.png" src="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/0e9c72d8313443779d691b7de24b8c38~tplv-k3u1fbpfcp-watermark.image" /></p>
+<ul>
+<li>第三步: 运行用例</li>
+</ul>
+<p>右击start_test.py, 选择Run则为运行模式, Debug则为调试模式</p>
+<p><img alt="image.png" src="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/446b94f5305a463bbb743711e8cfb520~tplv-k3u1fbpfcp-watermark.image" /></p>
+<ul>
+<li>用例编写规则</li>
+</ul>
+<p>Python:</p>
+<ul>
+<li>可参考Search.py编写用例(最好用例的类名不重复)</li>
+<li>用例需要写在TestSuite/测试集/这种目录下</li>
+<li>用例需要继承base_case.py</li>
+<li>用例需要以test开头如test_bmp</li>
+<li>用例的test函数需要带上screenshot的装饰器, 不带无截图功能</li>
+<li>报告会按照时间生成, 且会写入2份report.html</li>
+<li>日志在webdriver_test.log查看</li>
+<li>Page页面编写此页面需要的操作及元素</li>
+<li>Location类是封装了WebElement, 其中包含name, value, 默认以css方式定位</li>
+<li>
+<p>Location类实例化的时候可指定第三个参数, 方便使用其他定位的同学。如:</p>
+<p><code>menu = Location("大后台左侧菜单", ".menuItem", "XPATH")</code></p>
+</li>
+</ul>
+<p>Xmind:</p>
+<ul>
+<li>
+<p>画布(必填)</p>
+<p>为TestSuite名, 可允许重复画布名</p>
+</li>
+<li>
+<p>根元素(必填)</p>
+<p>为用例的Class名</p>
+</li>
+<li>
+<p>描述(最好有)</p>
+<p>为该用例的测试点</p>
+</li>
+<li>
+<p>页面(必填)</p>
+<p>需要填写Page下的页面, 子节点为其页面下需要用到的方法, 方法后如果还有子节点，则为该方法返回值, 若有多个返回值则用;分割且该返回值会被保留方便做断言</p>
+</li>
+<li>
+<p>跳过(不填默认生成用例)</p>
+<p>不为True的时候均会生成用例</p>
+</li>
+<li>
+<p>重跑次数(可选)</p>
+<p>用例若失败, 重新运行的次数, 默认为0。</p>
+</li>
+<li>
+<p>步骤(必填)</p>
+<p>子节点为页面方法或断言, 若以assert开头则为断言, 否则则判断为方法, 若在页面中忘了填写该方法, 则调用系统内部方法。</p>
+<p>方法节点的子节点为参数, 同样以;分割。</p>
+<p>断言的子节点为2或3个, 如assertEqual, 可理解是<code>A==B?true:msg</code>, 最后一个参数是msg, 具体出错原因。</p>
+</li>
+<li>
+<p>已知缺陷</p>
+<ol>
+<li>截止到现在还未支持非页面方法调用如print;</li>
+<li>不支持导入本用例需要的其他类库;</li>
+<li>其他不爽的有待补充。</li>
+</ol>
+</li>
+</ul>
+<h3 id="_13">亮痛点</h3>
+<ul class="task-list">
+<li class="task-list-item">
+<p><label class="task-list-control"><input type="checkbox" disabled checked/><span class="task-list-indicator"></span></label> 浏览器驱动</p>
+</li>
+<li>
+<p>问题: 浏览器驱动偶尔会与浏览器对应不上</p>
+</li>
+<li>
+<p>解决方案: 自动下载, 但只针对mac/win下的chrome, 且版本不能太低。firefox不支持, 任性。</p>
+</li>
+<li class="task-list-item">
+<p><label class="task-list-control"><input type="checkbox" disabled checked/><span class="task-list-indicator"></span></label> 集成jenkins</p>
+</li>
+<li>
+<p>问题: centos6.x不带桌面无法运行UI自动化用例</p>
+</li>
+<li>
+<p>解决方案:</p>
+<ol>
+<li>phantomJs(不合适, 还是要写出来)</li>
+</ol>
+<p>新版selenium使用的时候会提示被废弃, 建议用无头模式取代, 且运行不稳定。</p>
+<ol>
+<li>Chrome无头模式(centos7以上应可行)</li>
+</ol>
+<p>由于jenkins所在机器centos6.x版本过低, 被Chrome放弃支持, Chrome浏览器无法安装</p>
+<ol>
+<li>Firefox无头模式(目测不可行, 测太多次了记不住)</li>
+</ol>
+<p>Firefox可正常安装, 但是geckodriver比较挑浏览器版本, 多次试验不成功, 换了无数个浏览器版本+geckodriver版本后已经忘了是否可行。</p>
+<ol>
+<li>Firefox+虚拟桌面(目前解决方案)</li>
+</ol>
+<p>见用例driver.py文件。但不完美, 错误截图显示的网页内容都····一言难尽, 好像一个瞎子终于重获光明却发现自己满脸麻子。回到正题, 为什么不自动同步firefox驱动, 因为在c方案卡壳太久比较恶心。</p>
+<p>版本信息:</p>
+<p>geckodriver0.16</p>
+<p>selenium&gt;=3.4</p>
+<p>firefox52.0</p>
+</li>
+<li class="task-list-item">
+<p><label class="task-list-control"><input type="checkbox" disabled checked/><span class="task-list-indicator"></span></label> 测试报告</p>
+</li>
+</ul>
+<p>由于邮件不支持js和引入的css, 导致报告巨难看。所以采用了附件形式, 目前是个比较大的痛点。</p>
+<ul class="task-list">
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled checked/><span class="task-list-indicator"></span></label> Page Object</li>
+</ul>
+<p>关于po, 确实也没有很深的研究, 只等小白鼠试水了。</p>
+<ul class="task-list">
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled checked/><span class="task-list-indicator"></span></label> api封装</li>
+</ul>
+<p>api封装得还不够多, 除了常用方法以外。但是基本上每个方法都插入了显示等待, 大大降低了元素找不到, 点不到, 各种不到的可能性。</p>
+<ul class="task-list">
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled checked/><span class="task-list-indicator"></span></label> 重跑</li>
+</ul>
+<p>解决了使用装饰器重跑用例不执行setUp+tearDown的问题。</p>
+<ul class="task-list">
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled checked/><span class="task-list-indicator"></span></label> 错误截图</li>
+</ul>
+<p>截图用base64保存, 所以只有错误的时候才会截图。因为base64太大。</p>
+<ul class="task-list">
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled checked/><span class="task-list-indicator"></span></label> Xmind编写用例</li>
+</ul>
+<p>这算一个小亮点吧。</p>
+<ul class="task-list">
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled checked/><span class="task-list-indicator"></span></label> 自动化配置环境</li>
+</ul>
+<p>已完成, 方便使用。</p>
+<ul class="task-list">
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled checked/><span class="task-list-indicator"></span></label> 数据库</li>
+</ul>
+<p>支持mongo和mysql。</p>
+<ul class="task-list">
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> 执行效率</li>
+</ul>
+<p>目前是单线程, 后续可能会支持异步。</p>
+
+              
+            </article>
+            
+          </div>
+        </div>
+        
+          <a href="#" class="md-top md-icon" data-md-component="top" hidden>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12Z"/></svg>
+            Back to top
+          </a>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+    <nav class="md-footer__inner md-grid" aria-label="Footer" >
+      
+      
+        
+        <a href="friends/%E5%85%AC%E4%BC%97%E5%8F%B7/" class="md-footer__link md-footer__link--next" aria-label="Next: 智囊团" rel="next">
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              智囊团
+            </div>
+          </div>
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"/></svg>
+          </div>
+        </a>
+      
+    </nav>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    <script id="__config" type="application/json">{"base": ".", "features": ["navigation.top"], "search": "assets/javascripts/workers/search.b97dbffb.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}}</script>
+    
+    
+      <script src="assets/javascripts/bundle.0238f547.min.js"></script>
+      
+        <script src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+      
+    
+  </body>
+</html>
