@@ -4,6 +4,7 @@ import subprocess
 import zipfile
 
 import requests
+import xmltodict
 from bs4 import BeautifulSoup
 
 from util.utils import Utils
@@ -74,6 +75,18 @@ class Browser(object):
             raise Exception("没有找到当前版本的合适驱动: {}".format(version))
 
     @classmethod
+    def search_ver_v3(cls, version):
+        ver = ".".join(version.split(".")[:2])
+        r = requests.get(Config.GOOGLE_URL)
+        data = xmltodict.parse(r.text)
+        contents = data.get("ListBucketResult").get("Contents")
+        for c in contents[::-1]:
+            if c.get("Key").startswith(ver):
+                return c.get("Key").split("/")[0]
+        raise Exception("没有找到当前版本的合适驱动: {}".format(version))
+
+
+    @classmethod
     def search_ver(cls, version):
         if version != "unknown":
             number = version.split(".")[0]
@@ -88,7 +101,7 @@ class Browser(object):
             vr = re.findall(r"-+ChromeDriver\s+v(\d+\.+\d+)[\s|.|-|]+", text)
             br = re.findall(r"Supports\s+Chrome\s+v(\d+-\d+)", text)
             if not br:
-                return cls.search_ver_v2(version)
+                return cls.search_ver_v3(version)
             for v, b in zip(vr, br):
                 small, bigger = b.split("-")
                 if int(small) <= int(number) <= int(bigger):
@@ -109,7 +122,7 @@ class Browser(object):
         else:
             file = "chromedriver_linux64.zip".format(file_vr)
             driver = "chromedriver"
-        r = requests.get("{}{}/{}".format(Config.driver_url, file_vr, file))
+        r = requests.get("{}{}/{}".format(Config.DRIVER_DOWNLOAD_URL, file_vr, file))
         file_path = os.path.join(Config.driver_dir, file)
         print("开始下载!")
         with open(file_path, "wb") as f:

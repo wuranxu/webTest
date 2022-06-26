@@ -33,8 +33,8 @@ class Login(object):
         # self.driver.send(self.passwd, Config.PWD)
         # self.driver.click(self.submit)
         # assert self.driver.exists(self.logo), "登录失败, 未找到大后台左上角logo"
-        assert self.driver.title == "微软 Bing 搜索 - 国内版", \
-            "打开bing失败, 浏览器title不为'微软 Bing 搜索 - 国内版'，可能未进入bing首页"
+        assert self.driver.title == "必应", \
+            "打开bing失败, 浏览器title不为'必应'，可能未进入bing首页"
         return self.driver
 
 

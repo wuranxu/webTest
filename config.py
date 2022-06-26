@@ -32,6 +32,10 @@ class BaseConf(object):
 
     driver_url = "https://npm.taobao.org/mirrors/chromedriver/"
 
+    DRIVER_DOWNLOAD_URL = "https://registry.npmmirror.com/-/binary/chromedriver/"
+
+    GOOGLE_URL = "https://chromedriver.storage.googleapis.com"
+
     TIMEOUT = 12  # 元素等待超时时间
 
     exists = 10  # 元素存在等待时间
